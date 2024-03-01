@@ -14,13 +14,19 @@ export const AlbumList = () => {
   const [username, setUsername] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [selectedAlbumId, setSelectedAlbumId] = useState<number | null>(null);
+  const [selectedAlbumTitle, setSelectedAlbumTitle] = useState<string | null>(
+    null
+  );
 
-  const albumIdClick = (albumId: number) => {
+  const albumIdClick = (albumId: number, albumTitle: string) => {
     setSelectedAlbumId(albumId);
+    setSelectedAlbumTitle(albumTitle);
   };
 
   const moveToAlbumDetail = (albumId: number) => {
-    navigate(`/albumDetail/${albumId}`);
+    navigate(`/albumDetail/${albumId}`, {
+      state: { userId, username, albumId, selectedAlbumTitle },
+    });
   };
 
   useEffect(() => {
@@ -92,7 +98,7 @@ export const AlbumList = () => {
                 ? 'border border-blue-500 text-blue-500 '
                 : ''
             }`}
-            onClick={() => albumIdClick(album.id)}
+            onClick={() => albumIdClick(album.id, album.title)}
           >{`${album.id}. ${album.title}`}</div>
         ))}
       </div>

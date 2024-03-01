@@ -1,21 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-type AlbumDetailProps = {
-  userId: number;
-  username: string | null;
-  albumId: number | null;
-  albumTitle: string | null;
-};
-
-export const AlbumDetail = ({
-  userId,
-  username,
-  albumId,
-  albumTitle,
-  ...props
-}: AlbumDetailProps) => {
+export const AlbumDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const userId = (location.state as { userId?: number })?.userId;
+  const username = (location.state as { username?: string | null })?.username;
+  const albumId = (location.state as { albumId?: number })?.albumId;
+  const albumTitle = (location.state as { selectedAlbumTitle?: string | null })
+    ?.selectedAlbumTitle;
 
   const signOut = () => {
     navigate('/');
@@ -35,8 +28,7 @@ export const AlbumDetail = ({
         </div>
       </header>
 
-      <div>{`${albumTitle}`}</div>
-      <div>{`${albumId}`}</div>
+      <div className='font-bold p-5'>{`${albumTitle} ${albumId}`}</div>
     </>
   );
 };
