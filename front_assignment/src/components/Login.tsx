@@ -1,11 +1,25 @@
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const idRef = useRef<HTMLInputElement | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = () => {
-    // Todo: Login
-    navigate('/albumList');
+    const id = Number(idRef.current?.value);
+
+    if (!idRef.current || !idRef.current.value) {
+      setError('User ID를 입력해주세요!');
+      idRef.current?.focus();
+      return;
+    } else if (id >= 1 && id <= 10) {
+      setError(null);
+      navigate('/albumList');
+    } else {
+      setError('User ID는 1~10번만 가능합니다.');
+      idRef.current?.focus();
+    }
   };
 
   return (
@@ -16,16 +30,14 @@ export const Login = () => {
 
       <div className='flex justify-between p-4'>
         <div className='mr-4'>
-          {/* <input type='number' ref={idRef} /> */}
-          <input type='number' placeholder='User ID...' />
+          <input type='number' placeholder='User ID...' ref={idRef} />
         </div>
         <button className='bg-green-400 text-white' onClick={handleLogin}>
           Sign In
         </button>
       </div>
 
-      {/* Todo: 입력값이 1~10이 아닐 경우만 표시 */}
-      <div className='text-red-500'>User ID는 1~10번만 가능합니다.</div>
+      {error && <div className='text-red-500'>{error}</div>}
     </>
   );
 };

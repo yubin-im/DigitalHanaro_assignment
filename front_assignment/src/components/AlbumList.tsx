@@ -1,13 +1,19 @@
 export const AlbumList = () => {
+  const handleSignOut = () => {
+    alert('로그아웃');
+  };
+
   return (
     <>
       <header className='flex items-center justify-between p-5 bg-cyan-600 text-white'>
         <div className='text-xl font-bold mr-12'>Hanaro Album</div>
 
         <div className='flex space-x-4'>
-          <div className='font-bold text-gray-500'>아이디</div>
-          <div className='font-bold text-black'>이름</div>
-          <button className='bg-red-500 text-white'>Sign Out</button>
+          <div className='font-bold text-gray-500'>id</div>
+          <div className='font-bold text-black'>name</div>
+          <button className='bg-red-500 text-white' onClick={handleSignOut}>
+            Sign Out
+          </button>
         </div>
       </header>
 
