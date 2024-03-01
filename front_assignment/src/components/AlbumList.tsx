@@ -19,6 +19,10 @@ export const AlbumList = () => {
     setSelectedAlbumId(albumId);
   };
 
+  const moveToAlbumDetail = (albumId: number) => {
+    navigate(`/albumDetail/${albumId}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +70,16 @@ export const AlbumList = () => {
       <div className='flex items-center justify-between p-4'>
         <div className='text-2xl font-bold'>앨범 목록</div>
         <div className='ml-4'>
-          <button className='bg-green-400 text-white'>앨범 상세보기</button>
+          <button
+            className='bg-green-400 text-white'
+            onClick={() =>
+              selectedAlbumId
+                ? moveToAlbumDetail(selectedAlbumId)
+                : alert('앨범을 선택해주세요!')
+            }
+          >
+            앨범 상세보기
+          </button>
         </div>
       </div>
 
