@@ -1,28 +1,42 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+type Album = {
+  userId: number;
+  id: number;
+  title: string;
+};
+
 export const AlbumList = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const userId = (location.state as { userId?: number })?.userId;
   const [username, setUsername] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const [albums, setAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
-    const fetchUsername = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
+        const userResponse = await fetch(
           `https://jsonplaceholder.typicode.com/users/${userId}`
         );
-        const data = await response.json();
-        setUsername(data.username);
+        const userData = await userResponse.json();
+        setUsername(userData.username);
+
+        const albumsResponse = await fetch(
+          `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
+        );
+        const albumsData: Album[] = await albumsResponse.json();
+        setAlbums(albumsData);
       } catch (error) {
         console.error(error);
         setUsername(null);
+        setAlbums([]);
       }
     };
 
     if (userId) {
-      fetchUsername();
+      fetchData();
     }
   }, [userId]);
 
@@ -49,6 +63,15 @@ export const AlbumList = () => {
         <div className='ml-4'>
           <button className='bg-green-400 text-white'>앨범 상세보기</button>
         </div>
+      </div>
+
+      <div className='p-4'>
+        {albums.map((album, index) => (
+          <div
+            key={album.id}
+            className='mb-2'
+          >{`${index + 1}. ${album.title}`}</div>
+        ))}
       </div>
     </>
   );
