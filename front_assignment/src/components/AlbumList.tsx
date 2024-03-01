@@ -13,6 +13,11 @@ export const AlbumList = () => {
   const userId = (location.state as { userId?: number })?.userId;
   const [username, setUsername] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
+  const [selectedAlbumId, setSelectedAlbumId] = useState<number | null>(null);
+
+  const albumIdClick = (albumId: number) => {
+    setSelectedAlbumId(albumId);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,11 +71,16 @@ export const AlbumList = () => {
       </div>
 
       <div className='p-4'>
-        {albums.map((album, index) => (
+        {albums.map((album) => (
           <div
             key={album.id}
-            className='mb-2'
-          >{`${index + 1}. ${album.title}`}</div>
+            className={`mb-2 cursor-pointer ${
+              selectedAlbumId === album.id
+                ? 'border border-blue-500 text-blue-500 '
+                : ''
+            }`}
+            onClick={() => albumIdClick(album.id)}
+          >{`${album.id}. ${album.title}`}</div>
         ))}
       </div>
     </>
