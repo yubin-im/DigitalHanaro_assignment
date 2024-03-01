@@ -7,9 +7,12 @@ type Album = {
   title: string;
 };
 
+const BASE_URL = 'https://jsonplaceholder.typicode.com';
+
 export const AlbumList = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const userId = (location.state as { userId?: number })?.userId;
   const [username, setUsername] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -32,14 +35,12 @@ export const AlbumList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await fetch(
-          `https://jsonplaceholder.typicode.com/users/${userId}`
-        );
+        const userResponse = await fetch(`${BASE_URL}/users/${userId}`);
         const userData = await userResponse.json();
         setUsername(userData.username);
 
         const albumsResponse = await fetch(
-          `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
+          `${BASE_URL}/albums?userId=${userId}`
         );
         const albumsData: Album[] = await albumsResponse.json();
         setAlbums(albumsData);
@@ -65,8 +66,8 @@ export const AlbumList = () => {
         <div className='text-xl font-bold mr-12'>Hanaro Album</div>
 
         <div className='flex space-x-4'>
-          <div className='font-bold text-gray-500'>{userId}</div>
-          <div className='font-bold text-black'>{username}</div>
+          <div className='font-bold text-gray-500 text-2xl'>{userId}</div>
+          <div className='font-bold text-black text-2xl'>{username}</div>
           <button className='bg-red-500 text-white' onClick={signOut}>
             Sign Out
           </button>
