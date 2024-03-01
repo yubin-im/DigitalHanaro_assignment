@@ -6,7 +6,7 @@ export const Login = () => {
   const idRef = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
+  const signIn = () => {
     const id = Number(idRef.current?.value);
 
     if (!idRef.current || !idRef.current.value) {
@@ -15,10 +15,11 @@ export const Login = () => {
       return;
     } else if (id >= 1 && id <= 10) {
       setError(null);
-      navigate('/albumList');
+      navigate('/albumList', { state: { userId: id } });
     } else {
       setError('User ID는 1~10번만 가능합니다.');
       idRef.current?.focus();
+      return;
     }
   };
 
@@ -32,7 +33,7 @@ export const Login = () => {
         <div className='mr-4'>
           <input type='number' placeholder='User ID...' ref={idRef} />
         </div>
-        <button className='bg-green-400 text-white' onClick={handleLogin}>
+        <button className='bg-green-400 text-white' onClick={signIn}>
           Sign In
         </button>
       </div>
