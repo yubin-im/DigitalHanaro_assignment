@@ -32,6 +32,10 @@ export const AlbumList = () => {
     });
   };
 
+  const signOut = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,10 +59,6 @@ export const AlbumList = () => {
       fetchData();
     }
   }, [userId]);
-
-  const signOut = () => {
-    navigate('/');
-  };
 
   return (
     <>
