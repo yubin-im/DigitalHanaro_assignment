@@ -1,10 +1,11 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export const AlbumList = () => {
   const location = useLocation();
   const userId = (location.state as { userId?: number })?.userId;
   const [username, setUsername] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -25,8 +26,8 @@ export const AlbumList = () => {
     }
   }, [userId]);
 
-  const handleSignOut = () => {
-    alert('로그아웃');
+  const signOut = () => {
+    navigate('/');
   };
 
   return (
@@ -37,7 +38,7 @@ export const AlbumList = () => {
         <div className='flex space-x-4'>
           <div className='font-bold text-gray-500'>{userId}</div>
           <div className='font-bold text-black'>{username}</div>
-          <button className='bg-red-500 text-white' onClick={handleSignOut}>
+          <button className='bg-red-500 text-white' onClick={signOut}>
             Sign Out
           </button>
         </div>
