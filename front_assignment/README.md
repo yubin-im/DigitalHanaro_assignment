@@ -31,7 +31,7 @@
 8. 간단하고 가독성 좋은 코드 작성하기
 9. UI 보다 UX에 집중하고 버그가 없도록 작성하기
 10. CRA나 Vite 등을 사용하여 프로젝트 생성 하기
-11. Node_modules 폴더만 제외하고 프로젝트 전체 압축 후 제출하기 (yarn dev 만 눌러도 실행 가능하도록)
+11. node_modules 폴더만 제외하고 프로젝트 전체 압축 후 제출하기 (yarn dev 만 눌러도 실행 가능하도록)
 
 ## 🖥️ 프로젝트 실행 방법
 
@@ -54,4 +54,4 @@
 
 ## 🚀 개발 일지
 
-### [[프론트엔드 실습 과제] 개발일지 (클릭!)](https://unleashed-fire-109.notion.site/bd3e8ccc518947df8fd764ac8bb24f40?pvs=4)
+### [[프론트엔드 실습 과제] 개발 일지 (클릭!)](https://unleashed-fire-109.notion.site/bd3e8ccc518947df8fd764ac8bb24f40?pvs=4)
