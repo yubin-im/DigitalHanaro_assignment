@@ -7,7 +7,7 @@
     <title>프론트엔드 종합실습</title>
 
     <!-- Main CSS : Header, Main, Footer -->
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/static/css/main.css" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -30,27 +30,24 @@
 
     <script>
       $(document).ready(function () {
-          $("#headerTop").load("./headerTop.html");
-          $("#header").load("./header.html");
-          $("#main").load("./main.html");
-          $("#footer").load("./footer.html");
+          $("#headerTop").load("/static/headerTop.html");
+          $("#header").load("/static/header.html");
+          $("#main").load("/static/main.html");
+          $("#footer").load("/static/footer.html");
       });
     </script>
   </head>
   <body>
+     메인페이지입니다.
     <!-- 헤더 -->
-    <!-- <div id="headerTop"></div> -->
-    <div th:replace="/fragments/headerTop.html :: fragment-headerTop"></div>
-    <!-- <div id="header" class="sticky-top"></div> -->
-    <div th:replace="/fragments/header.html :: fragment-header" class="sticky-top"></div>
+    <div id="headerTop"></div>
+    <div id="header" class="sticky-top"></div>
 
     <!-- 메인 -->
-    <!-- <div id="main"></div> -->
-    <div th:replace="/main.html :: fragment-main"></div>
+    <div id="main"></div>
 
     <!-- 푸터 -->
-    <!-- <div id="footer"></div> -->
-    <div th:replace="/fragments/footer.html :: fragment-footer"></div>
+    <div id="footer"></div>
 
     <script>
       $(document).ready(function () {
