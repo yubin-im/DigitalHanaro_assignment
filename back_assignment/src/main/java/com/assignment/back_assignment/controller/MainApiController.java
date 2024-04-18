@@ -101,8 +101,9 @@ public class MainApiController {
     // 공지사항 전체 조회
     @PostMapping("/community/community01")
     @ResponseBody
-    public List<CompanyNotice> announce() {
-        List<CompanyNotice> companyNoticeList = companyNoticeService.findAll();
+    public List<CompanyNoticeDTO> announce() {
+        List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.findAll();
+
         return companyNoticeList;
     }
 
