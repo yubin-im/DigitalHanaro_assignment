@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,5 +43,23 @@ public class CompanyNoticeService {
                 .noticeMemberId(companyNotice.getNoticeMemberId())
                 .noticeDate(companyNotice.getNoticeDate())
                 .build();
+    }
+
+    // 공지사항 검색 기능
+    @Transactional
+    public List<CompanyNoticeDTO> searchNotices(String searchType, String searchText) {
+        List<CompanyNotice> companyNoticeList;
+
+        if ("제목".equals(searchType)) {
+            companyNoticeList =  companyNoticeRepository.findByNoticeTitleContaining(searchText);
+        } else if ("내용".equals(searchType)) {
+            companyNoticeList = companyNoticeRepository.findByNoticeContentContaining(searchText);
+        } else {
+            companyNoticeList = Collections.emptyList();
+        }
+
+        return companyNoticeList.stream()
+                .map(this::convertToCompanyNoticeDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -106,17 +106,19 @@
     <table>
       <tr>
         <td>
-          <select name="내용" id="">
-            <option value="">제목</option>
-            <option value="">내용</option>
-            <option value="">작성자</option>
+          <select id="searchType">
+            <option value="제목">제목</option>
+            <option value="내용">내용</option>
+            <option value="작성자">작성자</option>
           </select>
         </td>
         <td>
-          <input type="text">
+          <input type="text" id="searchText">
         </td>
         <td>
-          <input type="image" src="../img/community/search.gif">
+          <button type="button" id="searchBtn">
+            <img src="../img/community/search.gif" alt="검색">
+          </button>
         </td>
       </tr>
     </table>
@@ -165,6 +167,28 @@
         });
       });
     }
+
+    // 공지사항 검색 기능
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const searchType = document.getElementById('searchType').value;
+      const searchText = document.getElementById('searchText').value;
+
+      fetch("/community/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          searchType: searchType,
+          searchText: searchText
+        })
+      })
+              .then(response => response.json())
+              .then(data => {
+                renderNoticeList(data);
+              })
+              .catch(error => console.error('Error:', error));
+    });
   </script>
 
   <!-- 푸터 -->

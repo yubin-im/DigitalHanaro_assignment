@@ -8,10 +8,7 @@ import com.assignment.back_assignment.service.CompanyNoticeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +120,17 @@ public class MainApiController {
                 .build();
 
         return noticeDetailResDTO;
+    }
+
+    // 공지사항 검색 기능
+    @PostMapping("/community/search")
+    @ResponseBody
+    public List<CompanyNoticeDTO> searchNotices(@RequestBody SearchNoticesReqDTO searchNoticesReqDTO) {
+        String searchType = searchNoticesReqDTO.getSearchType();
+        String searchText = searchNoticesReqDTO.getSearchText();
+
+        List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.searchNotices(searchType, searchText);
+        return companyNoticeList;
     }
 
 }
