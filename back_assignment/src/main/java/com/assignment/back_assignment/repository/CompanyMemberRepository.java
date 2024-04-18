@@ -18,5 +18,6 @@ public interface CompanyMemberRepository extends JpaRepository<CompanyMember, Lo
 
     // 로그인 기능
     CompanyMember findCompanyMemberByMemberIdAndMemberPw(String memberId, String memberPw);
+    CompanyMember findCompanyMemberByMemberId(String memberId);
 
 }
