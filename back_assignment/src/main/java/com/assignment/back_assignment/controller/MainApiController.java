@@ -3,8 +3,10 @@ package com.assignment.back_assignment.controller;
 import com.assignment.back_assignment.dto.FindIdReqDTO;
 import com.assignment.back_assignment.dto.FindPwReqDTO;
 import com.assignment.back_assignment.dto.JoinReqDTO;
+import com.assignment.back_assignment.dto.LoginReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.service.CompanyMemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +73,28 @@ public class MainApiController {
         } else {
             return "비밀번호를 찾을 수 없습니다.";
         }
+    }
+
+    // 로그인 기능
+    @PostMapping("/login-action")
+    @ResponseBody
+    public String login(@RequestBody LoginReqDTO loginReqDTO, HttpSession session) {
+        String result = companyMemberService.login(loginReqDTO.getMemberId(), loginReqDTO.getMemberPw());
+        if (result.equals("로그인이 완료되었습니다!")) {
+            session.setAttribute("memberId", loginReqDTO.getMemberId());
+        }
+        return result;
+    }
+
+    // 로그아웃 기능
+    @PostMapping("/logout-action")
+    @ResponseBody
+    public String logout(HttpSession session) {
+        session.setAttribute("userId", null);
+        session.invalidate();
+
+        String message = "로그아웃 되었습니다!";
+        return message;
     }
 
 }

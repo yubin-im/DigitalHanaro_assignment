@@ -63,13 +63,17 @@
             아이디 <br>
             비밀번호
           </td>
+          <form id="loginForm">
           <td>
-            <input type="text" name="loginID"> <br>
-            <input type="password" name="loginPW">
+            <input type="text" name="loginID" id="loginId"> <br>
+            <input type="password" name="loginPW" id="loginPw">
           </td>
           <td>
-            <input class="loginImg" type="image" src="../img/member/btn_login.gif">
+              <button type="button" onclick="login()">
+                <img src="../img/member/btn_login.gif">
+              </button>
           </td>
+          </form>
         </tr>
       </table>
       <div class="loginSection2">
@@ -95,6 +99,41 @@
 
     </div>
   </div>
+
+  <script>
+    // 로그인 기능
+    const login = () => {
+      const loginId = document.getElementById("loginId").value;
+      const loginPw = document.getElementById("loginPw").value;
+
+      fetch("/login-action", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          memberId: loginId,
+          memberPw: loginPw
+        })
+      })
+              .then(response => {
+                if (response.ok) {
+                  return response.text();
+                } else {
+                  throw new Error("오류 발생");
+                }
+              })
+              .then(data => {
+                alert(data);
+                if(data == "로그인이 완료되었습니다!") {
+                  window.location.href ="/";
+                }
+              })
+              .catch(error => {
+                console.error("오류 발생: ", error);
+              });
+    }
+  </script>
 
 
   <!-- 푸터 -->

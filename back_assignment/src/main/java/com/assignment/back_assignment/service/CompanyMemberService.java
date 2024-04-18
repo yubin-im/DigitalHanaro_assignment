@@ -63,4 +63,19 @@ public class CompanyMemberService {
 
         return findMemberPw;
     }
+
+    // 로그인 기능
+    @Transactional
+    public String login(String memberId, String memberPw) {
+        CompanyMember companyMember = companyMemberRepository.findCompanyMemberByMemberIdAndMemberPw(memberId, memberPw);
+
+        if(companyMember == null) {
+            return "아이디가 존재하지 않습니다.";
+        } else if (!memberPw.equals(companyMember.getMemberPw())) {
+            return "비밀번호가 다릅니다.";
+        } else {
+            return "로그인이 완료되었습니다!";
+        }
+    }
+
 }
