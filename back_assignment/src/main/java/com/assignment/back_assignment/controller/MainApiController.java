@@ -3,8 +3,10 @@ package com.assignment.back_assignment.controller;
 import com.assignment.back_assignment.dto.*;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.entity.CompanyNotice;
+import com.assignment.back_assignment.entity.CompanyOne2one;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import com.assignment.back_assignment.service.CompanyNoticeService;
+import com.assignment.back_assignment.service.CompanyOne2oneService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import java.util.Map;
 public class MainApiController {
     final private CompanyMemberService companyMemberService;
     final private CompanyNoticeService companyNoticeService;
+    final private CompanyOne2oneService companyOne2oneService;
 
     // 회원가입 기능
     @PostMapping("/member/join-action")
@@ -131,6 +134,14 @@ public class MainApiController {
 
         List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.searchNotices(searchType, searchText);
         return companyNoticeList;
+    }
+
+    // 1대1 문의 작성 기능
+    @PostMapping("/customer/writeOne2one-action")
+    @ResponseBody
+    public CompanyOne2one writeOne2one(@RequestBody WriteOne2oneReqDTO writeOne2oneReqDTO) {
+        CompanyOne2one companyOne2one = companyOne2oneService.writeOne2one(writeOne2oneReqDTO);
+        return companyOne2one;
     }
 
 }

@@ -97,7 +97,7 @@
       <div>The design and maintenance are excellent.</div>
     </div>
     <div class="question">
-      <form action="" name="questionForm">
+      <form name="questionForm" id="questionForm">
         <table>
           <tr>
             <td>구분</td>
@@ -110,36 +110,76 @@
           </tr>
           <tr>
             <td>성명</td>
-            <td><input type="text" class="inputStyle1" name="name"></td>
+            <td><input type="text" class="inputStyle1" name="name" id="name"></td>
           </tr>
           <tr>
             <td>전화번호</td>
-            <td><input type="text" class="inputStyle1" name="tel"></td>
+            <td><input type="text" class="inputStyle1" name="tel" id="tel"></td>
           </tr>
           <tr>
             <td>이메일</td>
-            <td><input type="text" class="inputStyle2" name="email"></td>
+            <td><input type="text" class="inputStyle2" name="email" id="email"></td>
           </tr>
           <tr>
             <td>주소</td>
-            <td><input type="text" class="inputStyle2" name="address"></td>
+            <td><input type="text" class="inputStyle2" name="address" id="address"></td>
           </tr>
           <tr>
             <td>제목</td>
-            <td><input type="text" class="inputStyle2" name="title"></td>
+            <td><input type="text" class="inputStyle2" name="title" id="title"></td>
           </tr>
           <tr>
             <td>설명</td>
-            <td><textarea name="desc" rows="10" style="width: 90%;"></textarea></td>
+            <td><textarea name="desc" id="desc" rows="10" style="width: 90%;"></textarea></td>
           </tr>
         </table>
       </form>
     </div>
     <div class="btn">
-      <input type="image" src="../img/customer/btn_confirm.gif" onclick="submit()">
+      <button type="button" onclick="writeOne2one()">
+        <img src="../img/customer/btn_confirm.gif">
+      </button>
       <input type="image" src="../img/customer/btn_cancel.gif" onclick="history.back();">
     </div>
   </div>
+
+  <script>
+    // 1대1 문의 작성 기능
+    const writeOne2one = () => {
+      const name = document.getElementById("name").value;
+      const tel = document.getElementById("tel").value;
+      const email = document.getElementById("email").value;
+      const address = document.getElementById("address").value;
+      const title = document.getElementById("title").value;
+      const content = document.getElementById("desc").value;
+
+      fetch("/customer/writeOne2one-action", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          one2oneName: name,
+          one2onePhone: tel,
+          one2oneEmail: email,
+          one2oneAddress: address,
+          one2oneTitle: title,
+          one2oneContent: content
+        })
+      })
+              .then(response => {
+                if (response.ok) {
+                  alert("1대1 문의 작성이 완료되었습니다!")
+                  window.location.href = "/";
+                } else {
+                  console.error("대1 문의 작성 실패");
+                }
+              })
+              .catch(error => {
+                console.error("오류 발생: ", error);
+              })
+    }
+  </script>
 
   <!-- 푸터 -->
   <div id="footer"></div>
