@@ -5,7 +5,9 @@ import com.assignment.back_assignment.dto.FindPwReqDTO;
 import com.assignment.back_assignment.dto.JoinReqDTO;
 import com.assignment.back_assignment.dto.LoginReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
+import com.assignment.back_assignment.entity.CompanyNotice;
 import com.assignment.back_assignment.service.CompanyMemberService;
+import com.assignment.back_assignment.service.CompanyNoticeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MainApiController {
     final private CompanyMemberService companyMemberService;
+    final private CompanyNoticeService companyNoticeService;
 
     // 회원가입 기능
     @PostMapping("/member/join-action")
@@ -95,6 +98,14 @@ public class MainApiController {
 
         String message = "로그아웃 되었습니다!";
         return message;
+    }
+
+    // 공지사항 전체 조회
+    @PostMapping("/community/community01")
+    @ResponseBody
+    public List<CompanyNotice> announce() {
+        List<CompanyNotice> companyNoticeList = companyNoticeService.findAll();
+        return companyNoticeList;
     }
 
 }
