@@ -12,4 +12,8 @@ public interface CompanyMemberRepository extends JpaRepository<CompanyMember, Lo
 
     // 아이디 찾기 기능
     CompanyMember findCompanyMemberByMemberNameAndMemberEmail(String memberName, String memberEmail);
+
+    // 비밀번호 찾기 기능
+    CompanyMember findCompanyMemberByMemberNameAndMemberIdAndMemberEmail(String memberName, String memberId, String memberEmail);
+
 }

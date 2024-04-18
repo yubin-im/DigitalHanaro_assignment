@@ -51,4 +51,16 @@ public class CompanyMemberService {
 
         return findMemberId;
     }
+
+    // 비밀번호 찾기 기능
+    @Transactional
+    public String findPw(String memberName, String memberId, String memberEmail) {
+        CompanyMember companyMember = companyMemberRepository.findCompanyMemberByMemberNameAndMemberIdAndMemberEmail(memberName, memberId, memberEmail);
+        if(companyMember == null) {
+            return "null";
+        }
+        String findMemberPw = companyMember.getMemberPw();
+
+        return findMemberPw;
+    }
 }
