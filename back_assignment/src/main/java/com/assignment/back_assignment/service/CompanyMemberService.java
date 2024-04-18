@@ -39,4 +39,16 @@ public class CompanyMemberService {
         boolean checkIdDup = companyMemberRepository.existsByMemberId(memberId);
         return checkIdDup;
     }
+
+    // 아이디 찾기 기능
+    @Transactional
+    public String findId(String memberName, String memberEmail) {
+        CompanyMember companyMember = companyMemberRepository.findCompanyMemberByMemberNameAndMemberEmail(memberName, memberEmail);
+        if(companyMember == null) {
+            return "null";
+        }
+        String findMemberId = companyMember.getMemberId();
+
+        return findMemberId;
+    }
 }
