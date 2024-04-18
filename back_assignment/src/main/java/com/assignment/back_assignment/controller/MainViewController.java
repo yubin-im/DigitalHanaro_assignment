@@ -44,7 +44,7 @@ public class MainViewController {
 
     // 공지사항- 상세 화면
     @GetMapping("/community/community01_1")
-    public String viewAnnounceDetail(@RequestParam Long noticeIdx){
+    public String viewAnnounceDetail(){
         return "community/community01_1";
     }
 

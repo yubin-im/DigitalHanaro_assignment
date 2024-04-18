@@ -19,4 +19,11 @@ public class CompanyNoticeService {
         List<CompanyNotice> companyNoticeList = companyNoticeRepository.findAll();
         return companyNoticeList;
     }
+
+    // 공자사항 상세 조회
+    @Transactional
+    public CompanyNotice findById(Long noticeIdx) {
+        CompanyNotice companyNotice = companyNoticeRepository.findById(noticeIdx).orElse(null);
+        return companyNotice;
+    }
 }

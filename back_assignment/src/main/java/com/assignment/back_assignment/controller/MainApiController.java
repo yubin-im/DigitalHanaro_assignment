@@ -1,9 +1,6 @@
 package com.assignment.back_assignment.controller;
 
-import com.assignment.back_assignment.dto.FindIdReqDTO;
-import com.assignment.back_assignment.dto.FindPwReqDTO;
-import com.assignment.back_assignment.dto.JoinReqDTO;
-import com.assignment.back_assignment.dto.LoginReqDTO;
+import com.assignment.back_assignment.dto.*;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.entity.CompanyNotice;
 import com.assignment.back_assignment.service.CompanyMemberService;
@@ -13,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -106,6 +104,24 @@ public class MainApiController {
     public List<CompanyNotice> announce() {
         List<CompanyNotice> companyNoticeList = companyNoticeService.findAll();
         return companyNoticeList;
+    }
+
+    // 공지사항 상세 조회
+    @PostMapping("/community/community01_1")
+    @ResponseBody
+    public NoticeDetailResDTO announceDetail(@RequestBody Map<String, Long> noticeIdMap) {
+        Long noticeIdx = noticeIdMap.get("noticeIdx");
+        CompanyNotice companyNotice = companyNoticeService.findById(noticeIdx);
+
+        // Entity -> DTO로 변환
+        NoticeDetailResDTO noticeDetailResDTO = NoticeDetailResDTO.builder()
+                .noticeIdx(companyNotice.getNoticeIdx())
+                .noticeTitle(companyNotice.getNoticeTitle())
+                .noticeContent(companyNotice.getNoticeContent())
+                .noticeDate(companyNotice.getNoticeDate())
+                .build();
+
+        return noticeDetailResDTO;
     }
 
 }

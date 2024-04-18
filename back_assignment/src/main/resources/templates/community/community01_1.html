@@ -73,7 +73,7 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" 
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown2"
               role="button" data-toggle="dropdown" aria-expanded="false">
               공지사항
           </a>
@@ -97,16 +97,17 @@
     </div>
     <div class="NoticeContent">
       <table>
+        <input type="hidden" id="noticeIdx" name="noticeIdx"/>
         <tr>
           <th>제목</th>
-          <td>새로운 공지사항을 알려드립니다.</td>
+          <td id="noticeTitle"></td>
         </tr>
         <tr>
           <th>작성일</th>
-          <td>2019-06-19</td>
+          <td id="noticeDate"></td>
         </tr>
         <tr>
-          <td colspan="2">새로운 공지사항을 알려드립니다.</td>
+          <td id="noticeContent" colspan="2"></td>
         </tr>
       </table>
       <div>
@@ -116,6 +117,35 @@
     </div>
 
   </div>
+  <script>
+    // 해당 페이지 로딩시 공지사항 상세 조회 출력 
+    window.onload = () => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const noticeIdx = urlParams.get('noticeIdx');
+
+      loadNoticeData(noticeIdx);
+    };
+
+    // 공지사항 상세 조회
+    const loadNoticeData = (noticeIdx) => {
+      fetch("/community/community01_1", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ noticeIdx: noticeIdx })
+      })
+              .then(respnse => respnse.json())
+              .then(data => {
+                document.getElementById("noticeIdx").textContent = data.noticeIdx;
+                document.getElementById("noticeTitle").textContent = data.noticeTitle;
+                document.getElementById("noticeContent").textContent = data.noticeContent;
+                document.getElementById("noticeDate").textContent = data.noticeDate;
+              })
+              .catch(error => {
+                console.error("Error: ", error);
+              })
+    }
+  </script>
 
   <!-- 푸터 -->
   <div id="footer"></div>
