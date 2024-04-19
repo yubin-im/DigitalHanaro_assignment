@@ -108,20 +108,23 @@
       <!-- 글작성은 구현하지 않는다.-->
       <img src="../img/customer/write.gif">
     </div>
+    <!-- 검색 기능 -->
     <table>
       <tr>
         <td>
-          <select name="내용" id="">
-            <option value="">제목</option>
-            <option value="">내용</option>
-            <option value="">작성자</option>
+          <select id="searchType">
+            <option value="제목">제목</option>
+            <option value="내용">내용</option>
+            <option value="작성자">작성자</option>
           </select>
         </td>
         <td>
-          <input type="text">
+          <input type="text" id="searchText">
         </td>
         <td>
-          <input type="image" src="../img/customer/search.gif">
+          <button type="button" id="searchBtn" onclick="searchQnas()">
+            <img src="../img/customer/search.gif" alt="검색">
+          </button>
         </td>
       </tr>
     </table>
@@ -170,6 +173,28 @@
 
     function openWindow(qnaIdx) {
       window.location.href = 'customer02_3?qnaIdx=' + qnaIdx;
+    }
+
+    // 묻고답하기 검색 기능
+    const searchQnas = () => {
+      const searchType = document.getElementById("searchType").value;
+      const searchText = document.getElementById("searchText").value;
+
+      fetch("/customer/customer02/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          searchType: searchType,
+          searchText: searchText
+        })
+      })
+              .then(response => response.json())
+              .then(data => {
+                renderQnaList(data);
+              })
+              .catch(error => console.error('Error:', error));
     }
   </script>
 </body>

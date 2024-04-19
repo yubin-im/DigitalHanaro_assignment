@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +58,27 @@ public class CompanyQnaService {
         } else {
             return false;
         }
+    }
+
+    // 묻고답하기 검색 기능
+    @Transactional
+    public List<CompanyQnaDTO> searchQnas(String searchType, String seachText) {
+        List<CompanyQna> companyQnaList;
+
+        if("제목".equals(searchType)) {
+            companyQnaList = companyQnaRepository.findByQnaTitleContaining(seachText);
+        } else if ("내용".equals(searchType)) {
+            companyQnaList = companyQnaRepository.findByQnaContentContaining(seachText);
+        } else if ("작성자".equals(searchType)) {
+            companyQnaList = companyQnaRepository.findByQnaNameContaining(seachText);
+        } else {
+            companyQnaList = Collections.emptyList();
+        }
+
+        // CompanyQna Entity -> CompanyQna DTO
+        return companyQnaList.stream()
+                .map(this::convertToCompanyQnaDTO)
+                .collect(Collectors.toList());
     }
 
 }

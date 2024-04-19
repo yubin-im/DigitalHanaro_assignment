@@ -180,4 +180,15 @@ public class MainApiController {
 
         return checkQnaPwRes;
     }
+
+    // 묻고답하기 검색 기능
+    @PostMapping("/customer/customer02/search")
+    @ResponseBody
+    public List<CompanyQnaDTO> searchQnas(@RequestBody SearchQnasReqDTO searchQnasReqDTO) {
+        String searchType = searchQnasReqDTO.getSearchType();
+        String searchText = searchQnasReqDTO.getSearchText();
+
+        List<CompanyQnaDTO> searchQnaList = companyQnaService.searchQnas(searchType, searchText);
+        return searchQnaList;
+    }
 }
