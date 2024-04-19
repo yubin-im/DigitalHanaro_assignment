@@ -4,16 +4,19 @@ import com.assignment.back_assignment.adminDto.AdminLoginReqDTO;
 import com.assignment.back_assignment.adminDto.MemberResDTO;
 import com.assignment.back_assignment.adminDto.SearchMemberReqDTO;
 import com.assignment.back_assignment.adminDto.SortMemberReqDTO;
+import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -64,5 +67,15 @@ public class AdminApiController {
 
         List<MemberResDTO> sortMemberList = companyMemberService.sortMembers(sortType, sortOption);
         return sortMemberList;
+    }
+
+    // 회원목록 행수 조절 기능
+    @PostMapping("/admin-member/changePageSize")
+    @ResponseBody
+    public List<CompanyMember> changeMemberListSize(@RequestBody Map<String, String> sizeMap) {
+        String pageSize = sizeMap.get("pageSize");
+        Page<CompanyMember> changeMemberListSize = companyMemberService.changeMemberListSize(pageSize);
+
+        return changeMemberListSize.stream().toList();
     }
 }

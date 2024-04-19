@@ -5,6 +5,9 @@ import com.assignment.back_assignment.dto.JoinReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.repository.CompanyMemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -150,5 +153,17 @@ public class CompanyMemberService {
         return companyMemberList.stream()
                 .map(this::convertToMemberListResDTO)
                 .collect(Collectors.toList());
+    }
+
+    // 회원목록 행수 조절 기능
+    @Transactional
+    public Page<CompanyMember> changeMemberListSize(String pageSize) {
+        if("page5".equals(pageSize)) {
+            return companyMemberRepository.findAll(PageRequest.of(0, 5));
+        } else if ("page10".equals(pageSize)) {
+            return companyMemberRepository.findAll(PageRequest.of(0, 10));
+        } else {
+            return companyMemberRepository.findAll(PageRequest.of(0, Integer.MAX_VALUE));
+        }
     }
 }

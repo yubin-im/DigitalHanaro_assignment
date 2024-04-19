@@ -153,13 +153,15 @@
 			  <option value="join_date_desc">가입일 내림차순</option>
 		  </select>
   		</div>
+		<!-- 목록 출력 개수 조절 기능 -->
   		<div class="adminDiv2" id="tableTitle">
   		  <div>회원목록 1건</div>
   		  <div>한페이지 행수
-	  		  <select class="size" name="page_select" id="page_select">
-	          <option value="page10" selected>5개만 보기</option>
-	          <option value="page10">10개만 보기</option>
-	        </select>
+	  		  <select class="size" name="page_select" id="page_select" onchange="changeMemberListSize()">
+				  <option value="all" selected>전체보기</option>
+				  <option value="page5">5개만 보기</option>
+				  <option value="page10">10개만 보기</option>
+	          </select>
   		  </div>
   		</div>
   		<div class="memberListForm">
@@ -320,6 +322,27 @@
 		   body: JSON.stringify({
 			   sortType: sortType,
 			   sortOption: sortOption
+		   })
+	   })
+			   .then(response => response.json())
+			   .then(data => {
+				   renderMemberList(data);
+			   })
+			   .catch(error => console.error('Error:', error));
+   }
+
+   // 회원목록 행수 조절 기능
+   const changeMemberListSize = () => {
+	   const pageSize = document.getElementById("page_select").value;
+	   console.log(pageSize)
+
+	   fetch("/admin-member/changePageSize", {
+		   method: "POST",
+		   headers: {
+			   "Content-Type": "application/json"
+		   },
+		   body: JSON.stringify({
+			   pageSize: pageSize
 		   })
 	   })
 			   .then(response => response.json())

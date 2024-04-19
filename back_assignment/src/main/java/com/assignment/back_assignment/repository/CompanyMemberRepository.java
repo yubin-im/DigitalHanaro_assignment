@@ -1,6 +1,8 @@
 package com.assignment.back_assignment.repository;
 
 import com.assignment.back_assignment.entity.CompanyMember;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -38,4 +40,7 @@ public interface CompanyMemberRepository extends JpaRepository<CompanyMember, Lo
     // 가입일을 기준으로 오름차순/내림차순 정렬
     List<CompanyMember> findAllByOrderByMemberJoinDateAsc();
     List<CompanyMember> findAllByOrderByMemberJoinDateDesc();
+
+    // 회원목록 행수 조절 기능
+    Page<CompanyMember> findAll(Pageable pageable);
 }
