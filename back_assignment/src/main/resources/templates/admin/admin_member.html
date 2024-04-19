@@ -158,33 +158,10 @@
 	        </select>
   		  </div>
   		</div>
-  		<div class="">
-  			<table class="adminTable">
-  			  <thead>
-  			  	<tr>
-	  			  	<th>아이디</th>
-	  			  	<th>성명</th>
-	  			  	<th>이메일</th>
-	  			  	<th>생일</th>
-	  			  	<th>가입일</th>
-  			  	</tr>
-  			  </thead>
-  			  <tbody>
-	  			  
-	  			    <tr>
-		  			    <td>hong</td>
-	  			  		<td>홍길동</td>
-	  			  		<td>test@gmail.com</td>
-	  			  		<td>2000-01-01</td>
-	  			  		<td>2024-04-09</td>
-	  			  	</tr>
-					  
-	  
-  			  </tbody>
-  			</table>
+  		<div class="memberListForm">
+			<!-- 회원 전체 목록 출력 -->
+			<div id="memberList" class="list"></div>
   		</div>
-  		
-  		
   	</div>
   </div>
 
@@ -238,7 +215,51 @@
     });
     $('#back-to-top').tooltip('show');
   });
-   
+
+  // 해당 페이지 로딩시 회원목록 전체 데이터 불러오기
+   window.onload = () => {
+	   fetch("/admin-member", {
+		   method: "POST",
+		   headers: {
+			   "Content-Type": "application/json"
+		   }
+	   })
+			   .then(response => response.json())
+			   .then(data => {
+				   renderMemberList(data);
+			   })
+			   .catch(error => console.error('Error:', error));
+   }
+
+  // 회원목록 전체 조회 폼 출력
+   const renderMemberList = (members) => {
+	   const memberList = document.getElementById("memberList");
+
+	   memberList.innerHTML = `
+	   <table class="adminTable">
+  			  <thead>
+  			  	<tr>
+	  			  	<th>아이디</th>
+	  			  	<th>성명</th>
+	  			  	<th>이메일</th>
+	  			  	<th>생일</th>
+	  			  	<th>가입일</th>
+  			  	</tr>
+  			  </thead>
+  			  <tbody>
+				${members.map((member) => `
+	  			    <tr>
+		  			    <td>${member.memberId}</td>
+	  			  		<td>${member.memberName}</td>
+	  			  		<td>${member.memberEmail}</td>
+	  			  		<td>${member.memberBirthDate}</td>
+	  			  		<td>${member.memberJoinDate}</td>
+	  			  	</tr>
+					`).join('')}
+  			  </tbody>
+  			</table>
+	   `;
+   }
 </script>
   
 </body>

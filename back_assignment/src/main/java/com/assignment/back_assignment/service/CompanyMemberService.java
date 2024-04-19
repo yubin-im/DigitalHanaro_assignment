@@ -1,5 +1,6 @@
 package com.assignment.back_assignment.service;
 
+import com.assignment.back_assignment.adminDto.MemberResDTO;
 import com.assignment.back_assignment.dto.JoinReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.repository.CompanyMemberRepository;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +82,27 @@ public class CompanyMemberService {
         } else {
             return "아이디가 존재하지 않습니다.";
         }
+    }
+
+    // 회원목록 전체 조회
+    @Transactional
+    public List<MemberResDTO> memberList() {
+        List<CompanyMember> companyMemberList = companyMemberRepository.findAll();
+
+        // CompanyMember Entity -> MemberListResDTO
+        return companyMemberList.stream()
+                .map(this::convertToMemberListResDTO)
+                .collect(Collectors.toList());
+    }
+
+    // CompanyMember Entity -> MemberListResDTO
+    private MemberResDTO convertToMemberListResDTO(CompanyMember companyMember) {
+        return MemberResDTO.builder()
+                .memberId(companyMember.getMemberId())
+                .memberName(companyMember.getMemberName())
+                .memberEmail(companyMember.getMemberEmail())
+                .memberBirthDate(companyMember.getMemberBirthDate())
+                .memberJoinDate(companyMember.getMemberJoinDate())
+                .build();
     }
 }
