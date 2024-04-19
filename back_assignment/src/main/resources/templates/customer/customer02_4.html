@@ -75,7 +75,7 @@
         </li>
 
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown"
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown2"
                role="button" data-toggle="dropdown" aria-expanded="false">
                 묻고답하기
             </a>
@@ -99,20 +99,21 @@
     </div>
     <div class="NoticeContent">
         <table>
+            <input type="hidden" id="qnaIdx" name="qnaIdx"/>
             <tr>
                 <th>제목</th>
-                <td>제목입니다.</td>
+                <td id="qnaTitle"></td>
             </tr>
             <tr>
                 <th>작성자</th>
-                <td>홍길동</td>
+                <td id="qnaName"></td>
             </tr>
             <tr>
                 <th>작성일</th>
-                <td>2024-04-15</td>
+                <td id="qnaDate"></td>
             </tr>
             <tr>
-                <td colspan="2">묻고답하기 내용입니다.</td>
+                <td id="qnaContent" colspan="2"></td>
             </tr>
         </table>
         <div>
@@ -120,6 +121,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 해당 페이지 로딩시 묻고답하기 상세 조회 출력
+    window.onload = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const qnaIdx = urlParams.get('qnaIdx');
+
+        loadNoticeData(qnaIdx);
+    };
+
+    // 묻고답하기 상세 조회
+    const loadNoticeData = (qnaIdx) => {
+        fetch("/customer/customer02_4", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ qnaIdx: qnaIdx })
+        })
+            .then(respnse => respnse.json())
+            .then(data => {
+                document.getElementById("qnaIdx").value = data.qnaIdx;
+                document.getElementById("qnaName").textContent = data.qnaName;
+                document.getElementById("qnaTitle").textContent = data.qnaTitle;
+                document.getElementById("qnaDate").textContent = data.qnaDate;
+                document.getElementById("qnaContent").textContent = data.qnaContent;
+            })
+            .catch(error => {
+                console.error("Error: ", error);
+            })
+    }
+</script>
 
 <!-- 푸터 -->
 <div th:replace="/fragments/footer.html :: fragment-footer"></div>

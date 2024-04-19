@@ -154,4 +154,14 @@ public class MainApiController {
 
         return companyQnaList;
     }
+
+    // 묻고답하기 상세 조회
+    @PostMapping("/customer/customer02_4")
+    @ResponseBody
+    public CompanyQnaDTO qnaDetail(@RequestBody Map<String, Long> qnaIdxMap) {
+        Long qnaIdx = qnaIdxMap.get("qnaIdx");
+        CompanyQnaDTO companyQnaDTO = companyQnaService.findById(qnaIdx);
+
+        return companyQnaDTO;
+    }
 }

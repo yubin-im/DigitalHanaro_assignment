@@ -38,4 +38,13 @@ public class CompanyQnaService {
                 .collect(Collectors.toList());
     }
 
+    // 묻고답하기 상세 조회
+    @Transactional
+    public CompanyQnaDTO findById(Long qnaIdx) {
+        CompanyQna companyQna = companyQnaRepository.findById(qnaIdx).orElse(null);
+        CompanyQnaDTO companyQnaDTO = convertToCompanyQnaDTO(companyQna);
+
+        return companyQnaDTO;
+    }
+
 }
