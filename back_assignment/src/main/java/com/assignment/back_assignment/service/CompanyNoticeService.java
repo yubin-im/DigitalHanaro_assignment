@@ -4,6 +4,8 @@ import com.assignment.back_assignment.dto.CompanyNoticeDTO;
 import com.assignment.back_assignment.entity.CompanyNotice;
 import com.assignment.back_assignment.repository.CompanyNoticeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,4 +110,15 @@ public class CompanyNoticeService {
                 .collect(Collectors.toList());
     }
 
+    // 공지사항 목록 행수 조절 기능
+    @Transactional
+    public Page<CompanyNotice> changeNoticeListSize(String pageSize) {
+        if("page5".equals(pageSize)) {
+            return companyNoticeRepository.findAll(PageRequest.of(0, 5));
+        } else if ("page10".equals(pageSize)) {
+            return companyNoticeRepository.findAll(PageRequest.of(0, 10));
+        } else {
+            return companyNoticeRepository.findAll(PageRequest.of(0, Integer.MAX_VALUE));
+        }
+    }
 }

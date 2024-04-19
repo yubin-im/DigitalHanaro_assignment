@@ -2,8 +2,8 @@ package com.assignment.back_assignment.controller;
 
 import com.assignment.back_assignment.adminDto.*;
 import com.assignment.back_assignment.dto.CompanyNoticeDTO;
-import com.assignment.back_assignment.dto.SearchNoticesReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
+import com.assignment.back_assignment.entity.CompanyNotice;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import com.assignment.back_assignment.service.CompanyNoticeService;
@@ -109,5 +109,15 @@ public class AdminApiController {
 
         List<CompanyNoticeDTO> sortNoticeList = companyNoticeService.sortNotices(sortType, sortOption);
         return sortNoticeList;
+    }
+
+    // 공지사항 관리- 공지사항 목록 행수 조절 기능
+    @PostMapping("/admin-notice/changePageSize")
+    @ResponseBody
+    public List<CompanyNotice> changeNoticeListSize(@RequestBody Map<String, String> sizeMap) {
+        String pageSize = sizeMap.get("pageSize");
+        Page<CompanyNotice> changeSizeNoticeList = companyNoticeService.changeNoticeListSize(pageSize);
+
+        return changeSizeNoticeList.stream().toList();
     }
 }

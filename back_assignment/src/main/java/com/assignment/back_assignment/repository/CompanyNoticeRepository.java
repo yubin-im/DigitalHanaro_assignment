@@ -1,6 +1,8 @@
 package com.assignment.back_assignment.repository;
 
 import com.assignment.back_assignment.entity.CompanyNotice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +27,7 @@ public interface CompanyNoticeRepository extends JpaRepository<CompanyNotice, Lo
     // 작성일을 기준으로 오름차순/내림차순 정렬
     List<CompanyNotice> findAllByOrderByNoticeDateAsc();
     List<CompanyNotice> findAllByOrderByNoticeDateDesc();
+
+    // 공지사항 목록 행수 조절 기능
+    Page<CompanyNotice> findAll(Pageable pageable);
 }

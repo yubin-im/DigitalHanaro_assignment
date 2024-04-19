@@ -185,12 +185,14 @@
           </select>
         </div>
 
+        <!-- 행 개수 조절 기능 -->
         <div class="adminDiv2" id="tableTitle">
           <div>목록 10건</div>
           <div>
             한페이지 행수
-            <select class="size" name="page_select" id="page_select">
-              <option value="page10" selected>5개만 보기</option>
+            <select class="size" name="page_select" id="page_select" onchange="changeNoticeMemberListSize()">
+              <option value="all" selected>전체 보기</option>
+              <option value="page5">5개만 보기</option>
               <option value="page10">10개만 보기</option>
             </select>
           </div>
@@ -371,6 +373,26 @@
           body: JSON.stringify({
             sortType: sortType,
             sortOption: sortOption
+          })
+        })
+                .then(response => response.json())
+                .then(data => {
+                  renderNoticeList(data);
+                })
+                .catch(error => console.error('Error:', error));
+      }
+
+      // 공지사항 행수 조절 기능
+      const changeNoticeMemberListSize = () => {
+        const pageSize = document.getElementById("page_select").value;
+
+        fetch("/admin-notice/changePageSize", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            pageSize: pageSize
           })
         })
                 .then(response => response.json())
