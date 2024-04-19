@@ -82,4 +82,30 @@ public class CompanyNoticeService {
                 .map(this::convertToCompanyNoticeDTO)
                 .collect(Collectors.toList());
     }
+
+    // 공지사항 정렬 기능
+    @Transactional
+    public List<CompanyNoticeDTO> sortNotices(String sortType, String sortOption) {
+        List<CompanyNotice> companyNoticeList = null;
+
+        if("noticeMemberId".equals(sortOption)) {
+            if("ASC".equals(sortType)) {
+                companyNoticeList = companyNoticeRepository.findAllByOrderByNoticeMemberIdAsc();
+            } else {
+                companyNoticeList = companyNoticeRepository.findAllByOrderByNoticeMemberIdDesc();
+            }
+        } else if ("noticeDate".equals(sortOption)) {
+            if("ASC".equals(sortType)) {
+                companyNoticeList = companyNoticeRepository.findAllByOrderByNoticeDateAsc();
+            } else {
+                companyNoticeList = companyNoticeRepository.findAllByOrderByNoticeDateDesc();
+            }
+        }
+
+        // CompanyNotice Entity -> CompanyNotice DTO
+        return companyNoticeList.stream()
+                .map(this::convertToCompanyNoticeDTO)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -173,15 +173,18 @@
             <img src="../img/community/search.gif" alt="검색">
           </button>
         </div>
+
+        <!-- 정렬 기능 -->
         <div class="adminDiv">
           정렬
-          <select class="size" name="order_select" id="order_select">
+          <select class="size" name="order_select" id="order_select" onchange="sortNotices()">
             <option value="id_asc" selected>아이디 오름차순</option>
             <option value="id_desc">아이디 내림차순</option>
             <option value="reg_date_asc">등록일 오름차순</option>
             <option value="reg_date_desc">등록일 내림차순</option>
           </select>
         </div>
+
         <div class="adminDiv2" id="tableTitle">
           <div>목록 10건</div>
           <div>
@@ -322,6 +325,52 @@
           body: JSON.stringify({
             searchType: searchType,
             searchText: searchText
+          })
+        })
+                .then(response => response.json())
+                .then(data => {
+                  renderNoticeList(data);
+                })
+                .catch(error => console.error('Error:', error));
+      }
+
+      // 공지사항 정렬 기능
+      const sortNotices = () => {
+        const orderSelect = document.getElementById("order_select").value;
+        let sortType;
+        let sortOption;
+
+        switch (orderSelect) {
+          case "id_asc":
+            sortType = "ASC";
+            sortOption = "noticeMemberId";
+            break;
+          case "id_desc":
+            sortType = "DESC";
+            sortOption = "noticeMemberId";
+            break;
+          case "reg_date_asc":
+            sortType = "ASC";
+            sortOption = "noticeDate";
+            break;
+          case "reg_date_desc":
+            sortType = "DESC";
+            sortOption = "noticeDate";
+            break;
+          default:
+            sortType = "ASC";
+            sortOption = "noticeMemberId";
+            break;
+        }
+
+        fetch("/admin-notice/sort", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            sortType: sortType,
+            sortOption: sortOption
           })
         })
                 .then(response => response.json())

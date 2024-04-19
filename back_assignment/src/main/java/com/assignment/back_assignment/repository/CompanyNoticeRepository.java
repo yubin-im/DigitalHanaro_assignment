@@ -18,4 +18,11 @@ public interface CompanyNoticeRepository extends JpaRepository<CompanyNotice, Lo
             "OR n.noticeMemberId LIKE %:searchText%")
     List<CompanyNotice> findByNoticeTitleOrNoticeContentOrNoticeMemberIdContaining(String searchText);
 
+    // 공지사항 정렬 기능
+    // 아이디를 기준으로 오름차순/내림차순 정렬
+    List<CompanyNotice> findAllByOrderByNoticeMemberIdAsc();
+    List<CompanyNotice> findAllByOrderByNoticeMemberIdDesc();
+    // 작성일을 기준으로 오름차순/내림차순 정렬
+    List<CompanyNotice> findAllByOrderByNoticeDateAsc();
+    List<CompanyNotice> findAllByOrderByNoticeDateDesc();
 }

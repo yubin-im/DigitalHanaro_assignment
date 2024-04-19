@@ -99,4 +99,15 @@ public class AdminApiController {
         List<CompanyNoticeDTO> searchNoticeList = companyNoticeService.adminSearchNotices(searchType, searchText);
         return searchNoticeList;
     }
+
+    // 공지사항 관리- 공지사항 정렬 기능
+    @PostMapping("/admin-notice/sort")
+    @ResponseBody
+    public List<CompanyNoticeDTO> sortNotices(@RequestBody SortNoticesReqDTO sortNoticesReqDTO) {
+        String sortType = sortNoticesReqDTO.getSortType();
+        String sortOption = sortNoticesReqDTO.getSortOption();
+
+        List<CompanyNoticeDTO> sortNoticeList = companyNoticeService.sortNotices(sortType, sortOption);
+        return sortNoticeList;
+    }
 }
