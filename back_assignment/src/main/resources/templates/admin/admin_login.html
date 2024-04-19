@@ -144,7 +144,7 @@
         <div><p>The design and maintenance are excellent.</p></div>
       </div>
       <div class="loginMain">
-        <form action="adminLoginAction" method="post">
+        <form id="adminLogin">
           <table class="main1">
             <tr>
               <td>
@@ -152,17 +152,13 @@
                 비밀번호
               </td>
               <td>
-                <input type="text" name="member_id" /> <br />
-                <input type="text" name="member_pw" />
+                <input type="text" name="member_id" id="member_id"/> <br />
+                <input type="password" name="member_pw" id="member_pw"/>
               </td>
               <td>
-                <input
-                  type="image"
-                  class="loginImg"
-                  name="submit"
-                  value="submit"
-                  src="../img/member/btn_login.gif"
-                />
+                <button type="button" onclick="adminLogin()">
+                  <img  src="../img/member/btn_login.gif">
+                </button>
               </td>
             </tr>
           </table>
@@ -225,6 +221,39 @@
         });
         $("#back-to-top").tooltip("show");
       });
+
+      // 관리자 로그인 기능
+      const adminLogin = () => {
+        const loginId = document.getElementById("member_id").value;
+        const loginPw = document.getElementById("member_pw").value;
+
+        fetch("/adminLogin-action", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            memberId: loginId,
+            memberPw: loginPw
+          })
+        })
+                .then(response => {
+                  if(response.ok) {
+                    return response.text();
+                  } else {
+                    throw new Error("오류 발생");
+                  }
+                })
+                .then(data => {
+                  alert(data);
+                  if(data == "로그인이 완료되었습니다!") {
+                    window.location.href = "/admin-member"
+                  }
+                })
+                .catch(error => {
+                  console.error("오류 발생: ", error);
+                })
+      }
     </script>
   </body>
 </html>
