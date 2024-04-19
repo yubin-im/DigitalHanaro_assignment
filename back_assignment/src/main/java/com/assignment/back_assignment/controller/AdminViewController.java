@@ -26,7 +26,7 @@ public class AdminViewController {
 
     // 공지사항관리- 상세 화면
     @GetMapping("/admin-notice-view")
-    public String viewAdminNoticeView(@RequestParam Long noticeIdx) {
+    public String viewAdminNoticeView() {
         return "admin/admin_notice_view";
     }
 

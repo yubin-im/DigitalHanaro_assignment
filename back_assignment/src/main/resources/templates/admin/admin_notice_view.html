@@ -146,29 +146,31 @@
           </li>
         </ul>
       </div>
+
       <!-- 메인 -->
       <div id="adminSection">
         <div class="adminDiv">
           <h3>공지사항 관리</h3>
         </div>
-        <div class="noticeViewTitle adminDiv2">
-          <span>[일반]타이틀1</span>
-          <span>
-            <span>글쓴이:admin</span>
-            <span>글번호:5</span>
-          </span>
-        </div>
-        <div class="adminDiv2">
-          <div class="noticeViewContent">
-            <textarea rows="5" cols="50" id="editor4" name="editor4">
-						내용입니다.1</textarea
-            >
+
+          <div class="noticeViewTitle adminDiv2">
+            <span id="title"></span>
+            <span>
+              <span>글쓴이:</span><span id="memberId"></span><br>
+              <span>글번호:</span><span id="idx"></span>
+            </span>
           </div>
-        </div>
+
+          <div class="adminDiv2">
+            <div class="noticeViewContent">
+              <textarea rows="5" cols="50" id="editor4" name="editor4"></textarea>
+            </div>
+          </div>
+
         <div class="noticeViewBtns adminDiv2">
           <div>
             <a href="/admin_notice_modify?notice_idx=1">수정</a>
-            <a href="/admin_notice_delete?notice_idx=1">삭제</a>
+            <a>삭제</a>
           </div>
           <div>
             <a href="/admin-notice">목록</a>
@@ -244,6 +246,39 @@
         });
         $("#back-to-top").tooltip("show");
       });
+
+      // 해당 페이지 로딩시 공지사항 상세 조회 출력
+      window.onload = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const noticeIdx = urlParams.get('noticeIdx');
+
+        loadNoticeData(noticeIdx);
+      };
+
+      // 공지사항 상세 조회
+      const loadNoticeData = (noticeIdx) => {
+        fetch("/admin-notice-view", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ noticeIdx: noticeIdx })
+        })
+                .then(respnse => respnse.json())
+                .then(data => {
+                  document.getElementById("title").textContent = data.noticeTitle;
+                  document.getElementById("memberId").textContent = data.noticeMemberId;
+                  document.getElementById("idx").textContent = data.noticeIdx;
+                  var editor = CKEDITOR.instances['editor4'];
+                  if (editor) {
+                    editor.setData(data.noticeContent);
+                  } else {
+                    document.getElementById("editor4").value = data.noticeContent;
+                  }
+                })
+                .catch(error => {
+                  console.error("Error: ", error);
+                })
+      }
     </script>
   </body>
 </html>

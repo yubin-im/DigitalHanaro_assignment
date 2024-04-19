@@ -128,4 +128,21 @@ public class AdminApiController {
         CompanyNotice companyNotice = companyNoticeService.writeNotice(writeNoticeReqDTO);
         return companyNotice;
     }
+
+    // 공지사항 관리- 공지글 상세 조회
+    @PostMapping("/admin-notice-view")
+    @ResponseBody
+    public AdminNoticeDetailResDTO adminNoticeDetail(@RequestBody Map<String, Long> noticeIdMap) {
+        Long noticeIdx = noticeIdMap.get("noticeIdx");
+        CompanyNotice companyNotice = companyNoticeService.findById(noticeIdx);
+
+        AdminNoticeDetailResDTO adminNoticeDetailResDTO = AdminNoticeDetailResDTO.builder()
+                .noticeIdx(companyNotice.getNoticeIdx())
+                .noticeTitle(companyNotice.getNoticeTitle())
+                .noticeContent(companyNotice.getNoticeContent())
+                .noticeMemberId(companyNotice.getNoticeMemberId())
+                .noticeDate(companyNotice.getNoticeDate()).build();
+
+        return adminNoticeDetailResDTO;
+    }
 }
