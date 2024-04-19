@@ -149,9 +149,9 @@
           <th>제목</th>
           <th>작성일</th>
         </tr>
-        ${notices.map((notice) => `
+        ${notices.map((notice, index) => `
             <tr class="noticeRow" data-noticeIdx="${notice.noticeIdx}">
-              <td>${notice.noticeIdx}</td>
+              <td>${index + 1}</td>
               <td>${notice.noticeTitle}</td>
               <td>${notice.noticeDate}</td>
             </tr>

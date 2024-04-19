@@ -159,9 +159,9 @@
             <th>작성자</th>
             <th>작성일</th>
           </tr>
-          ${qnas.map((qna) => `
+          ${qnas.map((qna, index) => `
               <tr onClick="openWindow(${qna.qnaIdx})">
-                <td>${qna.qnaIdx}</td>
+                <td>${index + 1}</td>
                 <td><img src="../img/customer/icon_sct.gif">${qna.qnaTitle}</td>
                 <td>${qna.qnaName}</td>
                 <td>${qna.qnaDate}</td>
