@@ -3,6 +3,7 @@ package com.assignment.back_assignment.controller;
 import com.assignment.back_assignment.adminDto.AdminLoginReqDTO;
 import com.assignment.back_assignment.adminDto.MemberResDTO;
 import com.assignment.back_assignment.adminDto.SearchMemberReqDTO;
+import com.assignment.back_assignment.adminDto.SortMemberReqDTO;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import jakarta.servlet.http.HttpSession;
@@ -52,5 +53,16 @@ public class AdminApiController {
 
         List<MemberResDTO> searchMemberList = companyMemberService.searchMember(searchType, searchText);
         return searchMemberList;
+    }
+
+    // 회원목록 정렬 기능
+    @PostMapping("/admin-member/sort")
+    @ResponseBody
+    public List<MemberResDTO> sortMembers(@RequestBody SortMemberReqDTO sortMemberReqDTO) {
+        String sortType = sortMemberReqDTO.getSortType();
+        String sortOption = sortMemberReqDTO.getSortOption();
+
+        List<MemberResDTO> sortMemberList = companyMemberService.sortMembers(sortType, sortOption);
+        return sortMemberList;
     }
 }

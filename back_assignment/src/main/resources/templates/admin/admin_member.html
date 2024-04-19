@@ -143,14 +143,15 @@
 			</button>
   		</div>
 
+		<!-- 정렬 기능 -->
   		<div class="adminDiv">
   		  정렬
-  		  <select class="size" name="order_select" id="order_select">
-          <option value="id_asc" selected>아이디 오름차순</option>
-          <option value="id_desc">아이디 내림차순</option>
-          <option value="join_date_asc">가입일 오름차순</option>
-          <option value="join_date_desc">가입일 내림차순</option>
-        </select>
+  		  <select class="size" name="order_select" id="order_select" onchange="sortMembers()">
+			  <option value="id_asc" selected>아이디 오름차순</option>
+			  <option value="id_desc">아이디 내림차순</option>
+			  <option value="join_date_asc">가입일 오름차순</option>
+			  <option value="join_date_desc">가입일 내림차순</option>
+		  </select>
   		</div>
   		<div class="adminDiv2" id="tableTitle">
   		  <div>회원목록 1건</div>
@@ -280,6 +281,52 @@
 					renderMemberList(data);
 				})
 				.catch(error => console.error('Error:', error));
+   }
+
+   // 회원목록 정렬 기능
+   const sortMembers = () => {
+	   const orderSelect = document.getElementById("order_select").value;
+	   let sortType;
+	   let sortOption;
+
+	   switch (orderSelect) {
+		   case "id_asc":
+			   sortType = "ASC";
+			   sortOption = "memberId";
+			   break;
+		   case "id_desc":
+			   sortType = "DESC";
+			   sortOption = "memberId";
+			   break;
+		   case "join_date_asc":
+			   sortType = "ASC";
+			   sortOption = "memberJoinDate";
+			   break;
+		   case "join_date_desc":
+			   sortType = "DESC";
+			   sortOption = "memberJoinDate";
+			   break;
+		   default:
+			   sortType = "ASC";
+			   sortOption = "memberId";
+			   break;
+	   }
+
+	   fetch("/admin-member/sort", {
+		   method: "POST",
+		   headers: {
+			   "Content-Type": "application/json"
+		   },
+		   body: JSON.stringify({
+			   sortType: sortType,
+			   sortOption: sortOption
+		   })
+	   })
+			   .then(response => response.json())
+			   .then(data => {
+				   renderMemberList(data);
+			   })
+			   .catch(error => console.error('Error:', error));
    }
 </script>
   

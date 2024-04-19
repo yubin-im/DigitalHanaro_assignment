@@ -126,4 +126,29 @@ public class CompanyMemberService {
                 .map(this::convertToMemberListResDTO)
                 .collect(Collectors.toList());
     }
+
+    // 회원목록 정렬 기능
+    @Transactional
+    public List<MemberResDTO> sortMembers(String sortType, String sortOption) {
+        List<CompanyMember> companyMemberList = null;
+
+        if("memberId".equals(sortOption)) {
+            if("ASC".equals(sortType)) {
+                companyMemberList = companyMemberRepository.findAllByOrderByMemberIdAsc();
+            } else {
+                companyMemberList = companyMemberRepository.findAllByOrderByMemberIdDesc();
+            }
+        } else if ("memberJoinDate".equals(sortOption)) {
+            if("ASC".equals(sortType)) {
+                companyMemberList = companyMemberRepository.findAllByOrderByMemberJoinDateAsc();
+            } else {
+                companyMemberList = companyMemberRepository.findAllByOrderByMemberJoinDateDesc();
+            }
+        }
+
+        // CompanyMember Entity -> MemberListResDTO
+        return companyMemberList.stream()
+                .map(this::convertToMemberListResDTO)
+                .collect(Collectors.toList());
+    }
 }

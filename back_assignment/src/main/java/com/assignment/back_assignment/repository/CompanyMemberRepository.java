@@ -31,4 +31,11 @@ public interface CompanyMemberRepository extends JpaRepository<CompanyMember, Lo
             "OR m.memberEmail LIKE %:searchText%")
     List<CompanyMember> findByMemberIdOrMemberNameOrMemberEmailContaining(String searchText);
 
+    // 회원목록 정렬 기능
+    // 아이디를 기준으로 오름차순/내림차순 정렬
+    List<CompanyMember> findAllByOrderByMemberIdAsc();
+    List<CompanyMember> findAllByOrderByMemberIdDesc();
+    // 가입일을 기준으로 오름차순/내림차순 정렬
+    List<CompanyMember> findAllByOrderByMemberJoinDateAsc();
+    List<CompanyMember> findAllByOrderByMemberJoinDateDesc();
 }
