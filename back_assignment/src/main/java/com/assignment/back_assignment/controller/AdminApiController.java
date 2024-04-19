@@ -4,9 +4,11 @@ import com.assignment.back_assignment.adminDto.AdminLoginReqDTO;
 import com.assignment.back_assignment.adminDto.MemberResDTO;
 import com.assignment.back_assignment.adminDto.SearchMemberReqDTO;
 import com.assignment.back_assignment.adminDto.SortMemberReqDTO;
+import com.assignment.back_assignment.dto.CompanyNoticeDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
+import com.assignment.back_assignment.service.CompanyNoticeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class AdminApiController {
     final private CompanyMemberAdminService companyMemberAdminService;
     final private CompanyMemberService companyMemberService;
+    final private CompanyNoticeService companyNoticeService;
 
     // 관리자 로그인 기능
     @PostMapping("/adminLogin-action")
@@ -77,5 +80,14 @@ public class AdminApiController {
         Page<CompanyMember> changeMemberListSize = companyMemberService.changeMemberListSize(pageSize);
 
         return changeMemberListSize.stream().toList();
+    }
+
+    // 공지사항 관리- 공지사항 전체 조회
+    @PostMapping("/admin-notice")
+    @ResponseBody
+    public List<CompanyNoticeDTO> AdminAnnounceList() {
+        List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.findAll();
+
+        return companyNoticeList;
     }
 }
