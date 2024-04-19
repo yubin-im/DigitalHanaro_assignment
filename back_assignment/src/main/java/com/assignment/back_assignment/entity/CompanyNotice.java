@@ -29,4 +29,9 @@ public class CompanyNotice {
     @Column(name = "notice_date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate noticeDate;
+
+    // 공지사항 수정
+    public void updateNotice(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
 }

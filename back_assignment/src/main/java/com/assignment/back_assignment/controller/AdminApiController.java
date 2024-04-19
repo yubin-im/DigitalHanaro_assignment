@@ -145,4 +145,13 @@ public class AdminApiController {
 
         return adminNoticeDetailResDTO;
     }
+
+    // 공지사항 수정 기능
+    @PostMapping("/admin-notice/update-action")
+    @ResponseBody
+    public CompanyNotice updateAdminNotice(@RequestBody UpdateNoticeReqDTO updateNoticeReqDTO) {
+        CompanyNotice companyNotice = companyNoticeService.updateAdminNotice(updateNoticeReqDTO);
+
+        return companyNotice;
+    }
 }

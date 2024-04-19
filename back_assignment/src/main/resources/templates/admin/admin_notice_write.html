@@ -217,9 +217,6 @@
 	   const noticeTitle = document.getElementById("noticeTitle").value;
 	   const noticeContent = CKEDITOR.instances.editor4.getData();
 
-	   console.log(noticeTitle);
-	   console.log(noticeContent);
-
 	   fetch("/admin-notice-write/write-action", {
 		   method: "POST",
 		   headers: {

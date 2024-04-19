@@ -1,5 +1,6 @@
 package com.assignment.back_assignment.service;
 
+import com.assignment.back_assignment.adminDto.UpdateNoticeReqDTO;
 import com.assignment.back_assignment.adminDto.WriteNoticeReqDTO;
 import com.assignment.back_assignment.dto.CompanyNoticeDTO;
 import com.assignment.back_assignment.entity.CompanyNotice;
@@ -133,6 +134,19 @@ public class CompanyNoticeService {
                 .noticeMemberId("admin")
                 .noticeDate(LocalDate.now())
                 .build();
+        companyNoticeRepository.save(companyNotice);
+
+        return companyNotice;
+    }
+
+    // 공지사항 수정 기능
+    @Transactional
+    public CompanyNotice updateAdminNotice(UpdateNoticeReqDTO updateNoticeReqDTO) {
+        Long noticeIdx = updateNoticeReqDTO.getNoticeIdx();
+        String noticeContent = updateNoticeReqDTO.getNoticeContent();
+
+        CompanyNotice companyNotice = companyNoticeRepository.findById(noticeIdx).orElse(null);
+        companyNotice.updateNotice(noticeContent);
         companyNoticeRepository.save(companyNotice);
 
         return companyNotice;
