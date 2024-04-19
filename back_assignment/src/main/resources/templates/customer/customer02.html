@@ -74,7 +74,7 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" 
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown2"
               role="button" data-toggle="dropdown" aria-expanded="false">
               묻고답하기
           </a>
@@ -97,44 +97,8 @@
       <div>The design and maintenance are excellent.</div>
     </div>
     <div class="qna">
-      <table>
-        <tr>
-          <th>번호</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>작성일</th>
-        </tr>
-        <tr onclick="openWindow(5)">
-          <td>5</td>
-          <td><img src="../img/customer/icon_sct.gif">문의사항에 대해 자세한 답변 부탁합니다.</td>
-          <td>hong</td>
-          <td>2019-06-19</td>
-        </tr>
-        <tr onclick="openWindow(4)">
-          <td>4</td>
-          <td><img src="../img/customer/icon_sct.gif">문의사항에 대해 자세한 답변 부탁합니다.</td>
-          <td>hong</td>
-          <td>2019-06-19</td>
-        </tr>
-        <tr onclick="openWindow(3)">
-          <td>3</td>
-          <td><img src="../img/customer/icon_sct.gif">문의사항에 대해 자세한 답변 부탁합니다.</td>
-          <td>hong</td>
-          <td>2019-06-19</td>
-        </tr>
-        <tr onclick="openWindow(2)">
-          <td>2</td>
-          <td><img src="../img/customer/icon_sct.gif">문의사항에 대해 자세한 답변 부탁합니다.</td>
-          <td>hong</td>
-          <td>2019-06-19</td>
-        </tr>
-        <tr onclick="openWindow(1)">
-          <td>1</td>
-          <td><img src="../img/customer/icon_sct.gif">문의사항에 대해 자세한 답변 부탁합니다.</td>
-          <td>hong</td>
-          <td>2019-06-19</td>
-        </tr>
-      </table>
+      <!-- 묻고답하기 전체 목록 출력 -->
+      <div id="qnaList"></div>
     </div>
   </div>
 
@@ -167,6 +131,43 @@
   <div id="footer"></div>
 
   <script>
+    // 해당 페이지 로딩시 묻고답하기 전제 조회 데이터 불러오기
+    window.onload = () => {
+      fetch("/customer/customer02", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+      })
+              .then(response => response.json())
+              .then(data => {
+                renderQnaList(data)
+              })
+              .catch(error => console.error("Error: ", error))
+    }
+
+    // 묻고답하기 전체 목록 폼 출력
+    const renderQnaList = (qnas) => {
+      const qnaList = document.getElementById("qnaList");
+
+      qnaList.innerHTML = `
+        <table>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+          </tr>
+          ${qnas.map((qna) => `
+              <tr onClick="openWindow(${qna.qnaIdx})">
+                <td>${qna.qnaIdx}</td>
+                <td><img src="../img/customer/icon_sct.gif">${qna.qnaTitle}</td>
+                <td>${qna.qnaName}</td>
+                <td>${qna.qnaDate}</td>
+              </tr>
+          `).join('')}
+        </table>
+      `;
+    }
+
     function openWindow(qnaIdx) {
       window.location.href = 'customer02_3?qnaIdx=' + qnaIdx;
     }

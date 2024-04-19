@@ -25,21 +25,4 @@ public class CompanyMemberDTO {
     private LocalDate memberBirthDate;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate memberJoinDate;
-
-    // CompanyMember DTO -> Entity 변환
-    public CompanyMember toCompanyMemberEntity() {
-        return CompanyMember.builder()
-                .memberIdx(memberIdx)
-                .memberId(memberId)
-                .memberPw(memberPw)
-                .memberName(memberName)
-                .memberEmail(memberEmail)
-                .memberEmailReceive(memberEmailReceive)
-                .memberPwQuestion(memberPwQuestion)
-                .memberPwAnswer(memberPwAnswer)
-                .memberGender(memberGender)
-                .memberBirthDate(memberBirthDate)
-                .memberJoinDate(memberJoinDate)
-                .build();
-    }
 }

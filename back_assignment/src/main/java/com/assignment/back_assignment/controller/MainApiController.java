@@ -7,6 +7,7 @@ import com.assignment.back_assignment.entity.CompanyOne2one;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import com.assignment.back_assignment.service.CompanyNoticeService;
 import com.assignment.back_assignment.service.CompanyOne2oneService;
+import com.assignment.back_assignment.service.CompanyQnaService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class MainApiController {
     final private CompanyMemberService companyMemberService;
     final private CompanyNoticeService companyNoticeService;
     final private CompanyOne2oneService companyOne2oneService;
+    final private CompanyQnaService companyQnaService;
 
     // 회원가입 기능
     @PostMapping("/member/join-action")
@@ -144,4 +146,12 @@ public class MainApiController {
         return companyOne2one;
     }
 
+    // 묻고답하기 전체 조회
+    @PostMapping("/customer/customer02")
+    @ResponseBody
+    public List<CompanyQnaDTO> qnaList() {
+        List<CompanyQnaDTO> companyQnaList = companyQnaService.findAll();
+
+        return companyQnaList;
+    }
 }
