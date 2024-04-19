@@ -154,6 +154,8 @@
         <div class="adminDiv">
           <h3>공지사항 관리</h3>
         </div>
+
+        <!-- 공지사항 검색 -->
         <div class="adminDiv">
           검색 옵션
           <select name="search_select" id="search_select">
@@ -166,9 +168,10 @@
             type="text"
             name="search_keyword"
             id="search_keyword"
-            value=""
           />
-          <input type="image" src="../img/community/search.gif" />
+          <button type="button" id="searchBtn" onclick="searchNotices()">
+            <img src="../img/community/search.gif" alt="검색">
+          </button>
         </div>
         <div class="adminDiv">
           정렬
@@ -304,6 +307,28 @@
       // 공지사항 상세조회로 경로 설정
       const openWindow = (noticeIdx) => {
         window.location.href= '/admin-notice-view?noticeIdx=' + noticeIdx;
+      }
+
+      // 공지사항 검색 기능
+      const searchNotices = () => {
+        const searchType = document.getElementById('search_select').value;
+        const searchText = document.getElementById('search_keyword').value;
+
+        fetch("/admin-notice/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            searchType: searchType,
+            searchText: searchText
+          })
+        })
+                .then(response => response.json())
+                .then(data => {
+                  renderNoticeList(data);
+                })
+                .catch(error => console.error('Error:', error));
       }
     </script>
   </body>

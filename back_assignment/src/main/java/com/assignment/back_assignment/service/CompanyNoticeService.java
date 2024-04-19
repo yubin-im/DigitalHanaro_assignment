@@ -51,11 +51,31 @@ public class CompanyNoticeService {
         List<CompanyNotice> companyNoticeList;
 
         if ("제목".equals(searchType)) {
-            companyNoticeList =  companyNoticeRepository.findByNoticeTitleContaining(searchText);
+            companyNoticeList = companyNoticeRepository.findByNoticeTitleContaining(searchText);
         } else if ("내용".equals(searchType)) {
             companyNoticeList = companyNoticeRepository.findByNoticeContentContaining(searchText);
         } else {
             companyNoticeList = Collections.emptyList();
+        }
+
+        return companyNoticeList.stream()
+                .map(this::convertToCompanyNoticeDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 관리자 페이지- 공지사항 관리- 공지사항 검색 기능
+    @Transactional
+    public List<CompanyNoticeDTO> adminSearchNotices(String searchType, String searchText) {
+        List<CompanyNotice> companyNoticeList;
+
+        if("title".equals(searchType)) {
+            companyNoticeList = companyNoticeRepository.findByNoticeTitleContaining(searchText);
+        } else if ("content".equals(searchType)) {
+            companyNoticeList = companyNoticeRepository.findByNoticeContentContaining(searchText);
+        } else if ("id".equals(searchType)) {
+            companyNoticeList = companyNoticeRepository.findByNoticeMemberIdContaining(searchText);
+        } else {
+            companyNoticeList = companyNoticeRepository.findByNoticeTitleOrNoticeContentOrNoticeMemberIdContaining(searchText);
         }
 
         return companyNoticeList.stream()

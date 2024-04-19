@@ -1,10 +1,8 @@
 package com.assignment.back_assignment.controller;
 
-import com.assignment.back_assignment.adminDto.AdminLoginReqDTO;
-import com.assignment.back_assignment.adminDto.MemberResDTO;
-import com.assignment.back_assignment.adminDto.SearchMemberReqDTO;
-import com.assignment.back_assignment.adminDto.SortMemberReqDTO;
+import com.assignment.back_assignment.adminDto.*;
 import com.assignment.back_assignment.dto.CompanyNoticeDTO;
+import com.assignment.back_assignment.dto.SearchNoticesReqDTO;
 import com.assignment.back_assignment.entity.CompanyMember;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
@@ -89,5 +87,16 @@ public class AdminApiController {
         List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.findAll();
 
         return companyNoticeList;
+    }
+
+    // 공지사항 관리- 공지사항 검색 기능
+    @PostMapping("/admin-notice/search")
+    @ResponseBody
+    public List<CompanyNoticeDTO> searchNotices(@RequestBody AdminSearchNoticeReqDTO adminSearchNoticeReqDTO) {
+        String searchType = adminSearchNoticeReqDTO.getSearchType();
+        String searchText = adminSearchNoticeReqDTO.getSearchText();
+
+        List<CompanyNoticeDTO> searchNoticeList = companyNoticeService.adminSearchNotices(searchType, searchText);
+        return searchNoticeList;
     }
 }
