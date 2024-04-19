@@ -164,4 +164,20 @@ public class MainApiController {
 
         return companyQnaDTO;
     }
+
+    // 묻고답하기 상세- 비밀번호 확인
+    @PostMapping("/check-qnaPw")
+    @ResponseBody
+    public CheckQnaPwResDTO CheckQnaPw(@RequestBody CheckQnaPwReqDTO checkQnaPwReqDTO) {
+        Long qnaIdx = checkQnaPwReqDTO.getQnaIdx();
+        String qnaPw = checkQnaPwReqDTO.getQnaPw();
+        boolean CheckQnaPw = companyQnaService.CheckQnaPw(qnaIdx, qnaPw);
+
+        CheckQnaPwResDTO checkQnaPwRes = CheckQnaPwResDTO.builder()
+                .CheckQnaPw(CheckQnaPw)
+                .qnaIdx(qnaIdx)
+                .build();
+
+        return checkQnaPwRes;
+    }
 }

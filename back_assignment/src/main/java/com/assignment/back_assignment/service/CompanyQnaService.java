@@ -47,4 +47,16 @@ public class CompanyQnaService {
         return companyQnaDTO;
     }
 
+    // 묻고답하기 상세- 비밀번호 확인
+    @Transactional
+    public boolean CheckQnaPw(Long qnaIdx, String qnaPw) {
+        CompanyQna companyQna = companyQnaRepository.findById(qnaIdx).orElse(null);
+
+        if(qnaPw.equals(companyQna.getQnaPw())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
