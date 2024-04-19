@@ -127,19 +127,22 @@
   		<div class="adminDiv">
   			<h3>회원관리</h3>
   		</div>
+
+		<!-- 검색 기능 -->
   		<div class="adminDiv">
-  			검색 옵션 
-  			<select name="search_select" id="search_select">
-          <option value="all" selected>전체</option>
-          <option value="id">아이디</option>
-          <option value="name">성명</option>
-          <option value="email">이메일</option>
-          <option value="phone">핸드폰</option>
-          <option value="address">주소</option>
-        </select>
-        <input type="text" name="search_keyword" id="search_keyword" value="">
-        <input type="image" src="../img/community/search.gif">
+  			검색 옵션
+			<select name="search_select" id="search_select">
+			  <option value="all" selected>전체</option>
+			  <option value="id">아이디</option>
+			  <option value="name">성명</option>
+			  <option value="email">이메일</option>
+			</select>
+        <input type="text" name="search_keyword" id="search_keyword">
+			<button type="button" id="searchBtn" onclick="searchMember()">
+				<img src="../img/community/search.gif" alt="검색">
+			</button>
   		</div>
+
   		<div class="adminDiv">
   		  정렬
   		  <select class="size" name="order_select" id="order_select">
@@ -165,9 +168,6 @@
   	</div>
   </div>
 
-
-
-    
 <!-- footer -->
 <div class="footer">
   <div class="container text-center">
@@ -190,7 +190,6 @@
     </div>
   </div>
 </div>
-
 
 <script> 
    // back to top 기능
@@ -259,6 +258,28 @@
   			  </tbody>
   			</table>
 	   `;
+   }
+
+   // 회원목록 검색 기능
+   const searchMember = () => {
+	   const searchType = document.getElementById("search_select").value;
+	   const searchText = document.getElementById("search_keyword").value;
+
+		fetch("/admin-member/search", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				searchType: searchType,
+				searchText: searchText
+			})
+		})
+				.then(response => response.json())
+				.then(data => {
+					renderMemberList(data);
+				})
+				.catch(error => console.error('Error:', error));
    }
 </script>
   

@@ -105,4 +105,25 @@ public class CompanyMemberService {
                 .memberJoinDate(companyMember.getMemberJoinDate())
                 .build();
     }
+
+    // 회원목록 검색 기능
+    @Transactional
+    public List<MemberResDTO> searchMember(String searchType, String searchText) {
+        List<CompanyMember> companyMemberList;
+
+        if("id".equals(searchType)) {
+            companyMemberList = companyMemberRepository.findByMemberIdContaining(searchText);
+        } else if ("name".equals(searchType)) {
+            companyMemberList = companyMemberRepository.findByMemberNameContaining(searchText);
+        } else if ("email".equals(searchType)) {
+            companyMemberList = companyMemberRepository.findByMemberEmailContaining(searchText);
+        } else {
+            companyMemberList = companyMemberRepository.findByMemberIdOrMemberNameOrMemberEmailContaining(searchText);
+        }
+
+        // CompanyMember Entity -> MemberListResDTO
+        return companyMemberList.stream()
+                .map(this::convertToMemberListResDTO)
+                .collect(Collectors.toList());
+    }
 }

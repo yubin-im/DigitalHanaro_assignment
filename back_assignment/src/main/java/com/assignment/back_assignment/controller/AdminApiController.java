@@ -2,6 +2,7 @@ package com.assignment.back_assignment.controller;
 
 import com.assignment.back_assignment.adminDto.AdminLoginReqDTO;
 import com.assignment.back_assignment.adminDto.MemberResDTO;
+import com.assignment.back_assignment.adminDto.SearchMemberReqDTO;
 import com.assignment.back_assignment.service.CompanyMemberAdminService;
 import com.assignment.back_assignment.service.CompanyMemberService;
 import jakarta.servlet.http.HttpSession;
@@ -40,5 +41,16 @@ public class AdminApiController {
         List<MemberResDTO> companyMemberList = companyMemberService.memberList();
 
         return companyMemberList;
+    }
+
+    // 회원목록 검색 기능
+    @PostMapping("/admin-member/search")
+    @ResponseBody
+    public List<MemberResDTO> searchMember(@RequestBody SearchMemberReqDTO searchMemberReqDTO) {
+        String searchType = searchMemberReqDTO.getSearchType();
+        String searchText = searchMemberReqDTO.getSearchText();
+
+        List<MemberResDTO> searchMemberList = companyMemberService.searchMember(searchType, searchText);
+        return searchMemberList;
     }
 }
