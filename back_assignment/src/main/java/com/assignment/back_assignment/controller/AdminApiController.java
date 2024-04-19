@@ -120,4 +120,12 @@ public class AdminApiController {
 
         return changeSizeNoticeList.stream().toList();
     }
+
+    // 공지사항 등록 기능
+    @PostMapping("/admin-notice-write/write-action")
+    @ResponseBody
+    public CompanyNotice writeNotice(@RequestBody WriteNoticeReqDTO writeNoticeReqDTO) {
+        CompanyNotice companyNotice = companyNoticeService.writeNotice(writeNoticeReqDTO);
+        return companyNotice;
+    }
 }

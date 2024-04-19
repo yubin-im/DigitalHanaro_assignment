@@ -1,5 +1,6 @@
 package com.assignment.back_assignment.service;
 
+import com.assignment.back_assignment.adminDto.WriteNoticeReqDTO;
 import com.assignment.back_assignment.dto.CompanyNoticeDTO;
 import com.assignment.back_assignment.entity.CompanyNotice;
 import com.assignment.back_assignment.repository.CompanyNoticeRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -120,5 +122,19 @@ public class CompanyNoticeService {
         } else {
             return companyNoticeRepository.findAll(PageRequest.of(0, Integer.MAX_VALUE));
         }
+    }
+
+    // 공지사항 등록 기능
+    @Transactional
+    public CompanyNotice writeNotice(WriteNoticeReqDTO writeNoticeReqDTO) {
+        CompanyNotice companyNotice = CompanyNotice.builder()
+                .noticeTitle(writeNoticeReqDTO.getNoticeTitle())
+                .noticeContent(writeNoticeReqDTO.getNoticeContent())
+                .noticeMemberId("admin")
+                .noticeDate(LocalDate.now())
+                .build();
+        companyNoticeRepository.save(companyNotice);
+
+        return companyNotice;
     }
 }

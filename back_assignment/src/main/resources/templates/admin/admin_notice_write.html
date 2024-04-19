@@ -135,15 +135,14 @@
           <option value="normal" selected>일반공지</option>
           <option value="important">중요공지</option>
         </select> -->
-        <label style="width: 100px;">타이틀</label>
-        <input type="text" name="noticeTitle" id="noticeTitle" value="">
+			<label style="width: 100px;">타이틀</label>
+			<input type="text" name="noticeTitle" id="noticeTitle">
   		</div>
   		<div class="adminDiv2">
-  		  <textarea rows="5" cols="50" id="editor4" name="editor4">1234</textarea>
-	
+  		  <textarea rows="5" cols="50" id="editor4" name="editor4"></textarea>
   		</div>
   		<div class="noticeWriteBtns adminDiv2">
-  		  <input type="submit" value="등록">
+  		  <input type="button" value="등록" onclick="writeNoticeAction()">
   		  <input type="button" onclick="history.back()" value="취소">
   		</div>
   		
@@ -212,7 +211,37 @@
     });
     $('#back-to-top').tooltip('show');
   });
-   
+
+  // 공지사항 등록 기능
+   const writeNoticeAction = () => {
+	   const noticeTitle = document.getElementById("noticeTitle").value;
+	   const noticeContent = CKEDITOR.instances.editor4.getData();
+
+	   console.log(noticeTitle);
+	   console.log(noticeContent);
+
+	   fetch("/admin-notice-write/write-action", {
+		   method: "POST",
+		   headers: {
+			   "Content-Type": "application/json"
+		   },
+		   body: JSON.stringify({
+			   noticeTitle: noticeTitle,
+			   noticeContent: noticeContent
+		   })
+	   })
+			   .then(response => {
+				   if (response.ok) {
+					   alert("공지사항 글이 등록되었습니다!")
+					   window.location.href = "/admin-notice";
+				   } else {
+					   console.error("공지사항 등록 실패");
+				   }
+			   })
+			   .catch(error => {
+				   console.error("오류 발생: ", error);
+			   })
+   }
 </script>
   
 </body>
