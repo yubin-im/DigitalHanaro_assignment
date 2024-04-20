@@ -2,7 +2,6 @@ package com.assignment.back_assignment.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainViewController {
@@ -50,7 +49,7 @@ public class MainViewController {
 
     // 1:1문의 화면
     @GetMapping("/customer/customer01")
-    public String viewInquiry(){
+    public String viewInquiry() {
         return "customer/customer01";
     }
 
@@ -62,7 +61,7 @@ public class MainViewController {
 
     // 묻고답하기- 상세 비밀번호확인 화면
     @GetMapping("/customer/customer02_3")
-    public String viewQnADetailPwd(@RequestParam Long qnaIdx){
+    public String viewQnADetailPwd(){
         return "customer/customer02_3";
     }
 
