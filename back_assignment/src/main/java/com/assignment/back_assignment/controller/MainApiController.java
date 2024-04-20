@@ -10,14 +10,13 @@ import com.assignment.back_assignment.service.CompanyOne2oneService;
 import com.assignment.back_assignment.service.CompanyQnaService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MainApiController {
     final private CompanyMemberService companyMemberService;
@@ -27,7 +26,6 @@ public class MainApiController {
 
     // 회원가입 기능
     @PostMapping("/member/join-action")
-    @ResponseBody
     public CompanyMember join(@RequestBody JoinReqDTO joinReqDTO) {
         CompanyMember companyMember = companyMemberService.join(joinReqDTO);
         return companyMember;
@@ -35,7 +33,6 @@ public class MainApiController {
 
     // 아이디 중복 확인 기능
     @PostMapping("/check-duplicate-id")
-    @ResponseBody
     public Map<String, Boolean> checkIdDuplicate(@RequestBody Map<String, String> idMap) {
         String memberId = idMap.get("memberId");
         boolean checkIdDup = companyMemberService.checkIdDuplicate(memberId);
@@ -47,7 +44,6 @@ public class MainApiController {
 
     // 아이디 찾기 기능
     @PostMapping("/findId-action")
-    @ResponseBody
     public String findId(@RequestBody FindIdReqDTO findIdReqDTO) {
         String memberName = findIdReqDTO.getMemberName();
         String memberEmail = findIdReqDTO.getMemberEmail();
@@ -63,7 +59,6 @@ public class MainApiController {
 
     // 비밀번호 찾기 기능
     @PostMapping("/findPw-action")
-    @ResponseBody
     public String findPw(@RequestBody FindPwReqDTO findPwReqDTO) {
         String memberName = findPwReqDTO.getMemberName();
         String memberId = findPwReqDTO.getMemberId();
@@ -80,7 +75,6 @@ public class MainApiController {
 
     // 로그인 기능
     @PostMapping("/login-action")
-    @ResponseBody
     public String login(@RequestBody LoginReqDTO loginReqDTO, HttpSession session) {
         String result = companyMemberService.login(loginReqDTO.getMemberId(), loginReqDTO.getMemberPw());
         if (result.equals("로그인이 완료되었습니다!")) {
@@ -91,7 +85,6 @@ public class MainApiController {
 
     // 로그아웃 기능
     @PostMapping("/logout-action")
-    @ResponseBody
     public String logout(HttpSession session) {
         session.setAttribute("userId", null);
         session.invalidate();
@@ -102,7 +95,6 @@ public class MainApiController {
 
     // 공지사항 전체 조회
     @PostMapping("/community/community01")
-    @ResponseBody
     public List<CompanyNoticeDTO> announce() {
         List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.findAll();
 
@@ -111,7 +103,6 @@ public class MainApiController {
 
     // 공지사항 상세 조회
     @PostMapping("/community/community01_1")
-    @ResponseBody
     public NoticeDetailResDTO announceDetail(@RequestBody Map<String, Long> noticeIdMap) {
         Long noticeIdx = noticeIdMap.get("noticeIdx");
         CompanyNotice companyNotice = companyNoticeService.findById(noticeIdx);
@@ -129,7 +120,6 @@ public class MainApiController {
 
     // 공지사항 검색 기능
     @PostMapping("/community/search")
-    @ResponseBody
     public List<CompanyNoticeDTO> searchNotices(@RequestBody SearchNoticesReqDTO searchNoticesReqDTO) {
         String searchType = searchNoticesReqDTO.getSearchType();
         String searchText = searchNoticesReqDTO.getSearchText();
@@ -140,7 +130,6 @@ public class MainApiController {
 
     // 1대1 문의 작성 기능
     @PostMapping("/customer/writeOne2one-action")
-    @ResponseBody
     public CompanyOne2one writeOne2one(@RequestBody WriteOne2oneReqDTO writeOne2oneReqDTO) {
         CompanyOne2one companyOne2one = companyOne2oneService.writeOne2one(writeOne2oneReqDTO);
         return companyOne2one;
@@ -148,7 +137,6 @@ public class MainApiController {
 
     // 묻고답하기 전체 조회
     @PostMapping("/customer/customer02")
-    @ResponseBody
     public List<CompanyQnaDTO> qnaList() {
         List<CompanyQnaDTO> companyQnaList = companyQnaService.findAll();
 
@@ -157,7 +145,6 @@ public class MainApiController {
 
     // 묻고답하기 상세 조회
     @PostMapping("/customer/customer02_4")
-    @ResponseBody
     public CompanyQnaDTO qnaDetail(@RequestBody Map<String, Long> qnaIdxMap) {
         Long qnaIdx = qnaIdxMap.get("qnaIdx");
         CompanyQnaDTO companyQnaDTO = companyQnaService.findById(qnaIdx);
@@ -167,7 +154,6 @@ public class MainApiController {
 
     // 묻고답하기 상세- 비밀번호 확인
     @PostMapping("/check-qnaPw")
-    @ResponseBody
     public CheckQnaPwResDTO CheckQnaPw(@RequestBody CheckQnaPwReqDTO checkQnaPwReqDTO) {
         Long qnaIdx = checkQnaPwReqDTO.getQnaIdx();
         String qnaPw = checkQnaPwReqDTO.getQnaPw();
@@ -183,7 +169,6 @@ public class MainApiController {
 
     // 묻고답하기 검색 기능
     @PostMapping("/customer/customer02/search")
-    @ResponseBody
     public List<CompanyQnaDTO> searchQnas(@RequestBody SearchQnasReqDTO searchQnasReqDTO) {
         String searchType = searchQnasReqDTO.getSearchType();
         String searchText = searchQnasReqDTO.getSearchText();

@@ -10,15 +10,14 @@ import com.assignment.back_assignment.service.CompanyNoticeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class AdminApiController {
     final private CompanyMemberAdminService companyMemberAdminService;
@@ -27,7 +26,6 @@ public class AdminApiController {
 
     // 관리자 로그인 기능
     @PostMapping("/adminLogin-action")
-    @ResponseBody
     public String adminLogin(@RequestBody AdminLoginReqDTO adminLoginReqDTO, HttpSession session) {
         String memberId = adminLoginReqDTO.getMemberId();
         String memberPw = adminLoginReqDTO.getMemberPw();
@@ -41,7 +39,6 @@ public class AdminApiController {
 
     // 회원목록 전체 조회
     @PostMapping("/admin-member")
-    @ResponseBody
     public List<MemberResDTO> memberList() {
         List<MemberResDTO> companyMemberList = companyMemberService.memberList();
 
@@ -50,7 +47,6 @@ public class AdminApiController {
 
     // 회원목록 검색 기능
     @PostMapping("/admin-member/search")
-    @ResponseBody
     public List<MemberResDTO> searchMember(@RequestBody SearchMemberReqDTO searchMemberReqDTO) {
         String searchType = searchMemberReqDTO.getSearchType();
         String searchText = searchMemberReqDTO.getSearchText();
@@ -61,7 +57,6 @@ public class AdminApiController {
 
     // 회원목록 정렬 기능
     @PostMapping("/admin-member/sort")
-    @ResponseBody
     public List<MemberResDTO> sortMembers(@RequestBody SortMemberReqDTO sortMemberReqDTO) {
         String sortType = sortMemberReqDTO.getSortType();
         String sortOption = sortMemberReqDTO.getSortOption();
@@ -72,7 +67,6 @@ public class AdminApiController {
 
     // 회원목록 행수 조절 기능
     @PostMapping("/admin-member/changePageSize")
-    @ResponseBody
     public List<CompanyMember> changeMemberListSize(@RequestBody Map<String, String> sizeMap) {
         String pageSize = sizeMap.get("pageSize");
         Page<CompanyMember> changeMemberListSize = companyMemberService.changeMemberListSize(pageSize);
@@ -82,7 +76,6 @@ public class AdminApiController {
 
     // 공지사항 관리- 공지사항 전체 조회
     @PostMapping("/admin-notice")
-    @ResponseBody
     public List<CompanyNoticeDTO> AdminAnnounceList() {
         List<CompanyNoticeDTO> companyNoticeList = companyNoticeService.findAll();
 
@@ -91,7 +84,6 @@ public class AdminApiController {
 
     // 공지사항 관리- 공지사항 검색 기능
     @PostMapping("/admin-notice/search")
-    @ResponseBody
     public List<CompanyNoticeDTO> searchNotices(@RequestBody AdminSearchNoticeReqDTO adminSearchNoticeReqDTO) {
         String searchType = adminSearchNoticeReqDTO.getSearchType();
         String searchText = adminSearchNoticeReqDTO.getSearchText();
@@ -102,7 +94,6 @@ public class AdminApiController {
 
     // 공지사항 관리- 공지사항 정렬 기능
     @PostMapping("/admin-notice/sort")
-    @ResponseBody
     public List<CompanyNoticeDTO> sortNotices(@RequestBody SortNoticesReqDTO sortNoticesReqDTO) {
         String sortType = sortNoticesReqDTO.getSortType();
         String sortOption = sortNoticesReqDTO.getSortOption();
@@ -113,7 +104,6 @@ public class AdminApiController {
 
     // 공지사항 관리- 공지사항 목록 행수 조절 기능
     @PostMapping("/admin-notice/changePageSize")
-    @ResponseBody
     public List<CompanyNotice> changeNoticeListSize(@RequestBody Map<String, String> sizeMap) {
         String pageSize = sizeMap.get("pageSize");
         Page<CompanyNotice> changeSizeNoticeList = companyNoticeService.changeNoticeListSize(pageSize);
@@ -123,7 +113,6 @@ public class AdminApiController {
 
     // 공지사항 등록 기능
     @PostMapping("/admin-notice-write/write-action")
-    @ResponseBody
     public CompanyNotice writeNotice(@RequestBody WriteNoticeReqDTO writeNoticeReqDTO) {
         CompanyNotice companyNotice = companyNoticeService.writeNotice(writeNoticeReqDTO);
         return companyNotice;
@@ -131,7 +120,6 @@ public class AdminApiController {
 
     // 공지사항 관리- 공지글 상세 조회
     @PostMapping("/admin-notice-view")
-    @ResponseBody
     public AdminNoticeDetailResDTO adminNoticeDetail(@RequestBody Map<String, Long> noticeIdMap) {
         Long noticeIdx = noticeIdMap.get("noticeIdx");
         CompanyNotice companyNotice = companyNoticeService.findById(noticeIdx);
@@ -148,7 +136,6 @@ public class AdminApiController {
 
     // 공지사항 수정 기능
     @PostMapping("/admin-notice/update-action")
-    @ResponseBody
     public CompanyNotice updateAdminNotice(@RequestBody UpdateNoticeReqDTO updateNoticeReqDTO) {
         CompanyNotice companyNotice = companyNoticeService.updateAdminNotice(updateNoticeReqDTO);
 
