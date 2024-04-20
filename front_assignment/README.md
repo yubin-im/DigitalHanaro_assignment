@@ -74,4 +74,4 @@
 
 ## 🚀 구현 과정
 
-### [[프론트엔드 실습 과제] 개발 일지 (클릭!)](https://unleashed-fire-109.notion.site/bd3e8ccc518947df8fd764ac8bb24f40?pvs=4)
+### [[프론트엔드 실습 과제] 구현 과정 (클릭!)](https://unleashed-fire-109.notion.site/bd3e8ccc518947df8fd764ac8bb24f40?pvs=4)
