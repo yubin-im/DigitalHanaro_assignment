@@ -26,6 +26,7 @@
 </p>
 
 ### ERD
+![testdb_erd](https://github.com/yubin-im/DigitalHanaro_assignment/assets/140530127/b6203f72-bf32-4845-bd22-6b785795730a)
 
 ## 📋 구현 과제
 
