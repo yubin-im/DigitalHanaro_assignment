@@ -1,4 +1,4 @@
-# Digital Hanaro 실습 과제
+# Digital Hanaro 개인 실습 과제
 
 ###
 

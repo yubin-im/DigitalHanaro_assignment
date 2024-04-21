@@ -6,6 +6,15 @@
 
 관리자 페이지가 별도로 존재합니다.
 
+백엔드 개발 후 제공되는 프론트엔드 파일과 연결합니다.
+
+### 프로젝트 기간/참여자
+
+- 프로젝트 기간
+  - 2024.04.17 ~ 2024.04.21
+- 참여자
+  - [BE 임유빈](https://github.com/yubin-im)
+
 ### 개발 환경
 
 #### [Back-end]
@@ -22,10 +31,21 @@
 <p>
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+</p>
+
+#### [Toos & Environment]
+
+<p>
+  <img src="https://img.shields.io/badge/IntelliJ%20IDEA-CB5B8D?style=for-the-badge&logo=intellijidea&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL%20Workbench-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
 </p>
 
 ### ERD
+
 ![testdb_erd](https://github.com/yubin-im/DigitalHanaro_assignment/assets/140530127/b6203f72-bf32-4845-bd22-6b785795730a)
 
 ## 📋 구현 과제
@@ -67,7 +87,7 @@
 
 ## 🖥️ 프로젝트 실행 방법
 
-1. git clone하기
+1. git clone 하기
 2. main- resources 폴더 안의 db.sql 코드를 복사하여 MySQL Workbench 쿼리에 붙여넣기 및 실행 후 데이터베이스와 테이블을 생성한다.
 3. [http://localhost:8080/](http://localhost:8080/) 으로 접속한다.
 
@@ -81,11 +101,11 @@
 <summary>아이디/비밀번호 찾기 실행 시 NullException 발생</summary>
 <div markdown="1">
 
-- 문제발생 현상
+- 문제 발생 현상
   - 아이디/비밀번호 찾기 기능 실행 중 가입하지 않은 아이디나 비밀번호를 입력했을 때 NullException이 발생하면서 서버가 중단되었다.
-- 문제발생 이유
+- 문제 발생 이유
   - company_member 테이블에 없는 아이디나 비밀번호를 입력한다면 엔티티를 찾을 때 결국 엔티티가 null이기 때문에 NullException이 발생한 것이다!
-- 해결방법
+- 해결 방법
 
   - 엔티티를 찾을 때 null이면 “null”과 같이 **String 데이터 타입으로 return**하여 사용하도록 했다.
 
@@ -111,11 +131,11 @@
 <summary>로그인 기능 실행 시 아이디/비밀번호 틀렸을 때 알림</summary>
 <div markdown="2">
 
-- 문제발생 현상
+- 문제 발생 현상
   - 아이디가 틀렸을 때는 “아이디가 존재하지 않습니다.”가 출력 되었지만, 아이디가 맞고 비밀번호가 틀렸을 때도 “아이디가 존재하지 않습니다.”가 출력되었다.
-- 문제발생 이유
+- 문제 발생 이유
   - 아이디/비밀번호가 모두 일치한 회원만 찾아서 비교했기 때문에 아이디가 맞고 비밀번호가 틀렸을 때도 “아이디가 존재하지 않습니다.”가 출력되었던 것이었다!
-- 해결방법
+- 해결 방법
 
   - 먼저 **아이디만 일치한 회원을 먼저 찾고**, 비밀번호를 비교하여 틀렸다면 “비밀번호가 맞지 않습니다.”를 출력하도록 하였다. **그 후 아이디와 비밀번호가 모두 일치한 회원을 비교**하였다.
 
