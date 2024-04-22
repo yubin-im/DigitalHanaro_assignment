@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 public class CompanyNotice {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long noticeIdx;
 
     @Column(name = "notice_title")
