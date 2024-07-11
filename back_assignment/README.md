@@ -34,7 +34,7 @@
   <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
 </p>
 
-#### [Toos & Environment]
+#### [Tools & Environment]
 
 <p>
   <img src="https://img.shields.io/badge/IntelliJ%20IDEA-CB5B8D?style=for-the-badge&logo=intellijidea&logoColor=white"/>
