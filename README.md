@@ -29,7 +29,7 @@
 
 ### [프로젝트]
 
-### [🍔 [미니 프로젝트] 키오스크 프로젝트](https://unleashed-fire-109.notion.site/Project-1-8c3983bfa8bf49139ce2812ff67dbe2e?pvs=4)
+### [🍔 [미니 프로젝트] 키오스크 서비스](https://unleashed-fire-109.notion.site/Project-1-8c3983bfa8bf49139ce2812ff67dbe2e?pvs=4)
 
 ### [🧳 [본 프로젝트 1] 해외여행 모임 통장 서비스](https://unleashed-fire-109.notion.site/Project-2-1c578f9b707440488b003aeae8e2d0e9?pvs=4)
 
